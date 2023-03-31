@@ -1,9 +1,0 @@
-.tours-form__fieldset_type_checkboxes {
-  padding-top: 34px;
-}
-
-@media screen and (max-width: 760px) {
-  .tours-form__fieldset_type_checkboxes {
-    padding-top: 30px;
-  }
-}
