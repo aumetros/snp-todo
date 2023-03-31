@@ -1,0 +1,11 @@
+.tours-form__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.tours-form__radio:checked + .tours-form__pseudo_type_radio::after {
+  display: block;
+}

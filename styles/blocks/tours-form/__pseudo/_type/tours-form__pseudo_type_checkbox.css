@@ -1,0 +1,50 @@
+.tours-form__pseudo_type_checkbox {
+  width: 26px;
+  height: 26px;
+  margin-right: 19px;
+  border: 2px solid #1B1F2B;
+  box-sizing: border-box;
+  border-radius: 5px;  
+  background-size: 13px 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.tours-form__pseudo_type_checkbox::after {
+  content: '';
+  position: absolute;
+  display: none;
+  top: 4px;
+  left: 8px;
+  width: 5px;
+  height: 10px;
+  border: solid #1B1F2B;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+@media screen and (max-width: 1024px) {
+  .tours-form__pseudo_type_checkbox {
+    margin-right: 11px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .tours-form__pseudo_type_checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 3px;
+    background-size: 10px 8px;
+  }
+
+  .tours-form__pseudo_type_checkbox::after {
+    top: 2px;
+    left: 6px;
+    width: 3px;
+    height: 8px;
+  }
+}

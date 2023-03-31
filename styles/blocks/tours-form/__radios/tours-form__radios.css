@@ -1,0 +1,10 @@
+.tours-form__radios {
+  display: flex;
+  margin: 8px 0 29px;
+}
+
+@media screen and (max-width: 760px) {
+  .tours-form__radios {
+    margin-bottom: 30px;
+  }
+}

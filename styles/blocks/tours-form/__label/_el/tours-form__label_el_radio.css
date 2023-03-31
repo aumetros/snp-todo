@@ -1,0 +1,10 @@
+.tours-form__label_el_radio {
+  display: flex;
+  padding-right: 31px;
+}
+
+@media screen and (max-width: 760px) {
+  .tours-form__label_el_radio {
+    padding-right: 30px;
+  }
+}

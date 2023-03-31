@@ -1,0 +1,12 @@
+.tours-form__fieldset_type_agree {
+  display: flex;
+  align-items: center;
+  margin: 2px 0 34px;
+}
+
+@media screen and (max-width: 760px) {
+  .tours-form__fieldset_type_agree {
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+}

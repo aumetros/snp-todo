@@ -1,0 +1,11 @@
+.tours-form__checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.tours-form__checkbox:checked + .tours-form__pseudo_type_checkbox::after {
+  display: block;
+}

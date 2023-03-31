@@ -1,0 +1,20 @@
+.tours-form__agree-link {
+  margin-left: 4px;
+  vertical-align: middle;
+  color: #1B1F2B;
+  text-decoration: none;
+}
+
+.tours-form__agree-link:hover {
+  text-decoration: underline;
+}
+
+.tours-form__agree-link:active {
+  color: #286562;
+}
+
+@media screen and (max-width: 780px) {
+  .tours-form__agree-link {
+    letter-spacing: 0;
+  }
+}
