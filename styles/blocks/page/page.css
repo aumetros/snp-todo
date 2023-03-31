@@ -1,7 +1,10 @@
 .page {
+  min-height: 100vh;
   color: #1B1F2B;
   background-color: #F9F7F4;
   font-family: 'Roboto', 'Arial', sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
 }
