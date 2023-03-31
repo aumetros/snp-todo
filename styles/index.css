@@ -11,3 +11,11 @@
 @import url(./blocks/todo-form/todo-form.css);
 @import url(./blocks/todo-form/__input/todo-form__input.css);
 @import url(./blocks/todo-form/__button/todo-form__button.css);
+
+@import url(./blocks/todo-list/todo-list.css);
+@import url(./blocks/todo-list/__item/todo-list__item.css);
+@import url(./blocks/todo-list/__item-text/todo-list__item-text.css);
+@import url(./blocks/todo-list/__item-btn/todo-list__item-btn.css);
+@import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_edit.css);
+@import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_copy.css);
+@import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_delete.css);

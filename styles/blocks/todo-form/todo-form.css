@@ -1,9 +1,10 @@
 .todo-form {
   margin: 0 auto;
-  max-width: 860px;
+  max-width: 900px;
   margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 30px;
   padding: 40px;
   display: flex;
+  box-sizing: border-box;
 }
