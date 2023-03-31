@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Веб-приложение для составления списка дел">
+  <meta name="keywords" content="Список, список дел, веб-приложение">
+  <meta name="author" content="Алексей Шевляков">
+  <link rel="icon" type="image/x-icon" href="./images/favicon.svg">
+  <link rel="stylesheet" href="./styles/index.css">
+  <title>Список дел</title>
+</head>
+
+<body class="body">
+  <div class="page">
+
+    <header>
+
+      <h1 class="header__title">Список дел</h1>
+
+    </header>
+
+    <main class="content">
+      <section class="todo">
+        <form class="todo-form">
+
+          <input type="text" name="todo" class="todo-form__input">
+          <button class="todo-form__button" type="submit">Добавить</button>
+
+        </form>
+        <ul class="todo-list">
+          <li class="todo-list__item">
+            <span class="todo-list__item-text">Создать приложение</span>
+            <button class="todo-list__item-edit-btn" type="button"></button>
+            <button class="todo-list__item-copy-btn" type="button"></button>
+            <button class="todo-list__item-delete-btn" type="button"></button>
+          </li>
+          <li class="todo-list__item">
+            <span class="todo-list__item-text">Оформить приложение</span>
+            <button class="todo-list__item-edit-btn" type="button"></button>
+            <button class="todo-list__item-copy-btn" type="button"></button>
+            <button class="todo-list__item-delete-btn" type="button"></button>
+          </li>
+          <li class="todo-list__item">
+            <span class="todo-list__item-text">Написать скрипт</span>
+            <button class="todo-list__item-edit-btn" type="button"></button>
+            <button class="todo-list__item-copy-btn" type="button"></button>
+            <button class="todo-list__item-delete-btn" type="button"></button>
+          </li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <h2 class="footer__title">&copy; 2023. Алексей Шевляков</h2>
+    </footer>
+
+  </div>
+</body>
+
+</html>
