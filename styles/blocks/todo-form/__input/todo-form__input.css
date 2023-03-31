@@ -1,5 +1,5 @@
 .todo-form__input {
-  height: 68px;
+  height: 58px;
   border: 1px solid #f4f0e9;
   background-color: #f9f7f4;
   border-radius: 10px;
@@ -9,6 +9,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 28px;
+  flex-grow: 1;
 }
 
 .todo-form__input::placeholder {

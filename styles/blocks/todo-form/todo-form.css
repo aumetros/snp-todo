@@ -1,7 +1,9 @@
 .todo-form {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 860px;
+  margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 30px;
   padding: 40px;
+  display: flex;
 }
