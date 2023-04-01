@@ -15,46 +15,33 @@
 
 <body class="body">
   <div class="page">
-
     <header>
       <h1 class="header__title">Список дел</h1>
     </header>
-
     <main class="content">
       <section class="todo">
         <form class="todo-form">
-
           <input type="text" name="todo" class="todo-form__input" placeholder="Добавьте следующее дело">
           <button class="todo-form__button" type="submit">Добавить</button>
-
         </form>
         <ul class="todo-list">
-          <li class="todo-list__item">
-            <span class="todo-list__item-text">Создать приложение</span>
-            <button class="todo-list__item-btn todo-list__item_type_edit" type="button" title="Редактировать"></button>
-            <button class="todo-list__item-btn todo-list__item_type_copy" type="button" title="Копировать"></button>
-            <button class="todo-list__item-btn todo-list__item_type_delete" type="button" title="Удалить"></button>
-          </li>
-          <li class="todo-list__item">
-            <span class="todo-list__item-text">Оформить приложение</span>
-            <button class="todo-list__item-btn todo-list__item_type_edit" type="button" title="Редактировать"></button>
-            <button class="todo-list__item-btn todo-list__item_type_copy" type="button" title="Копировать"></button>
-            <button class="todo-list__item-btn todo-list__item_type_delete" type="button" title="Удалить"></button>
-          </li>
-          <li class="todo-list__item">
-            <span class="todo-list__item-text">Написать скрипт</span>
-            <button class="todo-list__item-btn todo-list__item_type_edit" type="button" title="Редактировать"></button>
-            <button class="todo-list__item-btn todo-list__item_type_copy" type="button" title="Копировать"></button>
-            <button class="todo-list__item-btn todo-list__item_type_delete" type="button" title="Удалить"></button>
-          </li>
         </ul>
       </section>
-
     </main>
-
     <footer class="footer">
       <h2 class="footer__title">&copy; 2023. Алексей Шевляков</h2>
     </footer>
+
+    <template id="todo-list__item">
+      <li class="todo-list__item">
+        <span class="todo-list__item-text"></span>
+        <button class="todo-list__item-btn todo-list__item_type_edit" type="button" title="Редактировать"></button>
+        <button class="todo-list__item-btn todo-list__item_type_copy" type="button" title="Копировать"></button>
+        <button class="todo-list__item-btn todo-list__item_type_delete" type="button" title="Удалить"></button>
+      </li>
+    </template>
+
+    <script src="./scripts/index.js"></script>
 
   </div>
 </body>
