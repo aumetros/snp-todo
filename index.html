@@ -20,10 +20,29 @@
     </header>
     <main class="content">
       <section class="todo">
-        <form class="todo-form">
-          <input type="text" name="todo" class="todo-form__input" placeholder="Добавьте следующее дело" required>
-          <button class="todo-form__button" type="submit">Добавить</button>
-        </form>
+
+        <div class="todo__container">
+
+          <form class="todo-form">
+            <input type="text" name="todo" class="todo-form__input" placeholder="Добавьте следующее дело" required>
+            <button class="todo-form__button" type="submit">Добавить</button>
+          </form>
+
+          <div class="todo-counters">
+
+            <span class="todo-counters__text todo-counters__text_active">Активные:</span>
+            <span class="todo-counters__counter todo-counters__counter_active">0</span>
+
+            <span class="todo-counters__text todo-counters__text_complete">Завершенные:</span>
+            <span class="todo-counters__counter todo-counters__counter_complete">0</span>
+
+            <span class="todo-counters__text todo-counters__text_all">Все:</span>
+            <span class="todo-counters__counter todo-counters__counter_all">0</span>
+
+          </div>
+
+        </div>
+
         <ul class="todo-list">
         </ul>
       </section>

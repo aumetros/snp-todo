@@ -10,9 +10,15 @@
 
 @import url(./blocks/content/content.css);
 
+@import url(./blocks/todo/__container/todo__container.css);
+
 @import url(./blocks/todo-form/todo-form.css);
 @import url(./blocks/todo-form/__input/todo-form__input.css);
 @import url(./blocks/todo-form/__button/todo-form__button.css);
+
+@import url(./blocks/todo-counters/todo-counters.css);
+@import url(./blocks/todo-counters/__counter/todo-counters__counter.css);
+@import url(./blocks/todo-counters/__text/todo-counters__text.css);
 
 @import url(./blocks/todo-list/todo-list.css);
 @import url(./blocks/todo-list/__item/todo-list__item.css);
