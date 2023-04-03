@@ -22,7 +22,7 @@ export default class ListItem {
 
   generateItem() {
     this._itemElement = this._getItemTemplate();
-    this._itemText = this._itemElement.querySelector('todo-list__item-text');
+    this._itemText = this._itemElement.querySelector('.todo-list__item-text');
     this._itemText.textContent = this._text;
 
     return this._itemElement;
