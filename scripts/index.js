@@ -22,7 +22,12 @@ const form = new Form(".todo-form", {
 });
 
 function createNewItem(text) {
-  const item = new ListItem(text, "#todo-list__item");
+  const item = new ListItem(text, "#todo-list__item", {
+    handleCopyItem: (text) => {
+      const listItem = createNewItem(text);
+      itemsContainer.addItem(listItem);
+    },
+  });
   const newItem = item.generateItem();
   return newItem;
 }

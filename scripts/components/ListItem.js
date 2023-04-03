@@ -1,7 +1,8 @@
 export default class ListItem {
-  constructor(text, templateSelector) {
+  constructor(text, templateSelector, {handleCopyItem}) {
     this._text = text;
     this._templateSelector = templateSelector;
+    this._handleCopyItem = handleCopyItem;
   }
 
   _getItemTemplate() {
@@ -12,25 +13,24 @@ export default class ListItem {
     return itemElement;
   }
 
-  _confirmEdit = () => {
+  _editText = () => {
     this._itemText.contentEditable = false;
-    this._itemText.removeEventListener('blur', this._confirmEdit);
+    this._itemText.removeEventListener('blur', this._editText);
   }
 
-  _editElementText() {
+  _handleEditItem() {
     this._itemText.contentEditable = true;
     this._itemText.focus();
-    this._itemText.addEventListener('blur', this._confirmEdit);
+    this._itemText.addEventListener('blur', this._editText);
   }
 
   _setEventListeners() {
-
-    this._editButton.addEventListener('click',() => this._editElementText());
-    console.log(this._editButton);
-
+    this._editButton.addEventListener('click', () => this._handleEditItem());
+    this._copyButton.addEventListener('click', () => this._handleCopyItem(this._itemText.textContent));
+    this._deleteButton.addEventListener('click', () => this._delete());
   }
 
-  delete() {
+  _delete() {
     this._itemElement.remove();
   }
 
