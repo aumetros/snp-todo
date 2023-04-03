@@ -14,6 +14,13 @@ const itemsContainer = new Section(
   ".todo-list"
 );
 
+const form = new Form(".todo-form", {
+  submitForm: (inputValue) => {
+    const listItem = createNewItem(inputValue);
+    itemsContainer.addItem(listItem);
+  },
+});
+
 function createNewItem(text) {
   const item = new ListItem(text, "#todo-list__item");
   const newItem = item.generateItem();
@@ -21,12 +28,5 @@ function createNewItem(text) {
 }
 
 itemsContainer.renderActiveItems(todos);
-
-const form = new Form(".todo-form", {
-  submitForm: (inputValue) => {
-    const listItem = createNewItem(inputValue);
-    itemsContainer.addItem(listItem);
-  }
-});
 
 form.setEventListeners();

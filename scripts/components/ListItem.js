@@ -12,8 +12,22 @@ export default class ListItem {
     return itemElement;
   }
 
+  _confirmEdit = () => {
+    this._itemText.contentEditable = false;
+    this._itemText.removeEventListener('blur', this._confirmEdit);
+  }
+
+  _editElementText() {
+    this._itemText.contentEditable = true;
+    this._itemText.focus();
+    this._itemText.addEventListener('blur', this._confirmEdit);
+  }
+
   _setEventListeners() {
-    
+
+    this._editButton.addEventListener('click',() => this._editElementText());
+    console.log(this._editButton);
+
   }
 
   delete() {
@@ -22,8 +36,20 @@ export default class ListItem {
 
   generateItem() {
     this._itemElement = this._getItemTemplate();
-    this._itemText = this._itemElement.querySelector('.todo-list__item-text');
+    this._itemText = this._itemElement.querySelector(".todo-list__item-text");
     this._itemText.textContent = this._text;
+
+    this._editButton = this._itemElement.querySelector(
+      ".todo-list__item_type_edit"
+    );
+    this._copyButton = this._itemElement.querySelector(
+      ".todo-list__item_type_copy"
+    );
+    this._deleteButton = this._itemElement.querySelector(
+      ".todo-list__item_type_delete"
+    );
+
+    this._setEventListeners();
 
     return this._itemElement;
   }
