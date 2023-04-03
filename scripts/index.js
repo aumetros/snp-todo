@@ -1,8 +1,9 @@
 import Form from "./components/Form.js";
 import ListItem from "./components/ListItem.js";
 import Section from "./components/Section.js";
+import Counter from "./components/Counter.js";
 
-import { todos } from "./utils/activeItems.js";
+import { todos } from "./utils/Items.js";
 
 const itemsContainer = new Section(
   {
@@ -16,21 +17,30 @@ const itemsContainer = new Section(
 
 const form = new Form(".todo-form", {
   submitForm: (inputValue) => {
-    const listItem = createNewItem(inputValue);
+    const listItem = createNewItem({
+      text: inputValue,
+      complete: false,
+    });
+    todos.push({ text: inputValue, complete: false, id: todos.length + 1 });
     itemsContainer.addItem(listItem);
+    counter.setCounters();
   },
 });
 
-function createNewItem(text) {
-  const item = new ListItem(text, "#todo-list__item", {
-    handleCopyItem: (text) => {
-      const listItem = createNewItem(text);
+function createNewItem(data) {
+  const item = new ListItem(data, "#todo-list__item", {
+    handleCopyItem: (data) => {
+      const listItem = createNewItem(data);
       itemsContainer.addItem(listItem);
     },
   });
   const newItem = item.generateItem();
   return newItem;
 }
+
+const counter = new Counter('.todo-counters', todos);
+
+counter.setCounters();
 
 itemsContainer.renderActiveItems(todos);
 
