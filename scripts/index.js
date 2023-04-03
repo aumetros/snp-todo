@@ -1,10 +1,9 @@
-const todos = [
-  'Сделать проектную работу',
-  'Полить цветы',
-  'Пройти туториал по Реакту',
-  'Сделать фронт для своего проекта',
-  'Погулять с собакой',
-  'Разобраться в замыканиях',
-  'Решить задачу на Codewars'
-];
+import Form from "./components/Form.js";
+import ListItem from "./components/ListItem.js";
+
+import { todos } from "./utils/activeItems.js";
+
+
+ const form = new Form('.todo-form');
+
  
