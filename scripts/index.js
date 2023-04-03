@@ -22,4 +22,11 @@ function createNewItem(text) {
 
 itemsContainer.renderActiveItems(todos);
 
-// const form = new Form(".todo-form");
+const form = new Form(".todo-form", {
+  submitForm: (inputValue) => {
+    const listItem = createNewItem(inputValue);
+    itemsContainer.addItem(listItem);
+  }
+});
+
+form.setEventListeners();

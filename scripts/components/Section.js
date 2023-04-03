@@ -5,7 +5,7 @@ export default class Section {
   }
 
   addItem(item) {
-    this._containerSelector.prepend(item);
+    this._containerSelector.append(item);
   }
 
   renderActiveItems(items) {
