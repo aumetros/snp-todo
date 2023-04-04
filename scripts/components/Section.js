@@ -1,16 +1,27 @@
 export default class Section {
-  constructor({ renderer }, containerSelector) {
+  constructor({ renderer }, containerSelector, tasks) {
     this._containerSelector = document.querySelector(containerSelector);
     this._renderer = renderer;
+    this._tasks = tasks;
   }
 
-  addItem(item) {
-    this._containerSelector.append(item);
+  addTask(task) {
+    this._containerSelector.append(task);
   }
 
-  renderActiveItems(items) {
-    items.forEach((item) => {
-      this._renderer(item);
-    })
+  clear() {
+    localStorage.clear();
+  }
+
+  loadTasks() {
+    if (localStorage.getItem(this._tasks) !== null) {
+      this._tasksArray = Array.from(
+        JSON.parse(localStorage.getItem(this._tasks))
+      );
+      this._tasksArray.forEach((task) => {
+        this._renderer(task);
+      });
+    }
+    return;
   }
 }

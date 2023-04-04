@@ -1,3 +1,4 @@
 .todo-list__item-text {
   flex-grow: 1;
+  margin: 0 10px;
 }

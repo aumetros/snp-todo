@@ -1,42 +1,41 @@
 import Form from "./components/Form.js";
-import ListItem from "./components/ListItem.js";
+import Task from "./components/Task.js";
 import Section from "./components/Section.js";
 import Counter from "./components/Counter.js";
 
-import { todos } from "./utils/Items.js";
-
-const itemsContainer = new Section(
+const tasksList = new Section(
   {
-    renderer: (item) => {
-      const listItem = createNewItem(item);
-      itemsContainer.addItem(listItem);
+    renderer: (task) => {
+      const listItem = createNewTask(task);
+      tasksList.addTask(listItem);
     },
   },
-  ".todo-list"
+  ".todo-list",
+  "tasks"
 );
 
 const form = new Form(".todo-form", {
-  submitForm: (inputValue) => {
+  submitForm: (task) => {
     localStorage.setItem(
       "tasks",
       JSON.stringify([
-        ...JSON.parse(localStorage.getItem("tasks")),
-        { task: inputValue, completed: false },
+        ...JSON.parse(localStorage.getItem("tasks") || "[]"),
+        task,
       ])
     );
-    const listItem = createNewItem(inputValue);
-    itemsContainer.addItem(listItem);
+    const newTask = createNewTask(task);
+    tasksList.addTask(newTask);
   },
 });
 
-function createNewItem(task) {
-  const item = new ListItem(task, "#todo-list__item", {
-    handleCopyItem: (task) => {
-      const listItem = createNewItem(task);
-      itemsContainer.addItem(listItem);
+function createNewTask(task) {
+  const item = new Task(task, "#todo-list__item", {
+    handleCopyTask: (task) => {
+      const newTask = createNewTask(task);
+      tasksList.addTask(newTask);
     },
   });
-  const newItem = item.generateItem();
+  const newItem = item.generateTask();
   return newItem;
 }
 
@@ -44,6 +43,8 @@ function createNewItem(task) {
 
 // counter.setCounters();
 
-// itemsContainer.renderActiveItems(todos);
+// tasksList.clear();
+
+tasksList.loadTasks();
 
 form.setEventListeners();
