@@ -17,20 +17,22 @@ const itemsContainer = new Section(
 
 const form = new Form(".todo-form", {
   submitForm: (inputValue) => {
-    const listItem = createNewItem({
-      text: inputValue,
-      complete: false,
-    });
-    todos.push({ text: inputValue, complete: false, id: todos.length + 1 });
+    localStorage.setItem(
+      "tasks",
+      JSON.stringify([
+        ...JSON.parse(localStorage.getItem("tasks")),
+        { task: inputValue, completed: false },
+      ])
+    );
+    const listItem = createNewItem(inputValue);
     itemsContainer.addItem(listItem);
-    counter.setCounters();
   },
 });
 
-function createNewItem(data) {
-  const item = new ListItem(data, "#todo-list__item", {
-    handleCopyItem: (data) => {
-      const listItem = createNewItem(data);
+function createNewItem(task) {
+  const item = new ListItem(task, "#todo-list__item", {
+    handleCopyItem: (task) => {
+      const listItem = createNewItem(task);
       itemsContainer.addItem(listItem);
     },
   });
@@ -38,10 +40,10 @@ function createNewItem(data) {
   return newItem;
 }
 
-const counter = new Counter('.todo-counters', todos);
+// const counter = new Counter('.todo-counters', todos);
 
-counter.setCounters();
+// counter.setCounters();
 
-itemsContainer.renderActiveItems(todos);
+// itemsContainer.renderActiveItems(todos);
 
 form.setEventListeners();

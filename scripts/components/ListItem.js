@@ -1,6 +1,6 @@
 export default class ListItem {
-  constructor(data, templateSelector, { handleCopyItem }) {
-    this._data = data;
+  constructor(task, templateSelector, { handleCopyItem }) {
+    this._task = task;
     this._templateSelector = templateSelector;
     this._handleCopyItem = handleCopyItem;
   }
@@ -32,7 +32,7 @@ export default class ListItem {
     this._check.addEventListener("click", (evt) => this._handleCheckItem(evt));
     this._editButton.addEventListener("click", () => this._handleEditItem());
     this._copyButton.addEventListener("click", () =>
-      this._handleCopyItem(this._data)
+      this._handleCopyItem(this._task)
     );
     this._deleteButton.addEventListener("click", () => this._delete());
   }
@@ -44,7 +44,7 @@ export default class ListItem {
   generateItem() {
     this._itemElement = this._getItemTemplate();
     this._itemText = this._itemElement.querySelector(".todo-list__item-text");
-    this._itemText.textContent = this._data.text;
+    this._itemText.textContent = this._task
 
     this._check = this._itemElement.querySelector(".todo-list__item-check");
 
