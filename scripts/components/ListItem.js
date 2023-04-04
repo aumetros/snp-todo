@@ -1,5 +1,5 @@
 export default class ListItem {
-  constructor(data, templateSelector, {handleCopyItem}) {
+  constructor(data, templateSelector, { handleCopyItem }) {
     this._data = data;
     this._templateSelector = templateSelector;
     this._handleCopyItem = handleCopyItem;
@@ -15,19 +15,26 @@ export default class ListItem {
 
   _editText = () => {
     this._itemText.contentEditable = false;
-    this._itemText.removeEventListener('blur', this._editText);
+    this._itemText.removeEventListener("blur", this._editText);
+  };
+
+  _handleCheckItem(evt) {
+    evt.target.classList.toggle("todo-list__item-check_checked");
   }
 
   _handleEditItem() {
     this._itemText.contentEditable = true;
     this._itemText.focus();
-    this._itemText.addEventListener('blur', this._editText);
+    this._itemText.addEventListener("blur", this._editText);
   }
 
   _setEventListeners() {
-    this._editButton.addEventListener('click', () => this._handleEditItem());
-    this._copyButton.addEventListener('click', () => this._handleCopyItem(this._data));
-    this._deleteButton.addEventListener('click', () => this._delete());
+    this._check.addEventListener("click", (evt) => this._handleCheckItem(evt));
+    this._editButton.addEventListener("click", () => this._handleEditItem());
+    this._copyButton.addEventListener("click", () =>
+      this._handleCopyItem(this._data)
+    );
+    this._deleteButton.addEventListener("click", () => this._delete());
   }
 
   _delete() {
@@ -38,6 +45,8 @@ export default class ListItem {
     this._itemElement = this._getItemTemplate();
     this._itemText = this._itemElement.querySelector(".todo-list__item-text");
     this._itemText.textContent = this._data.text;
+
+    this._check = this._itemElement.querySelector(".todo-list__item-check");
 
     this._editButton = this._itemElement.querySelector(
       ".todo-list__item_type_edit"
