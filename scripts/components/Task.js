@@ -16,8 +16,19 @@ export default class Task {
   }
 
   _confirmEditTask = () => {
-    this._taskText.contentEditable = false;
-    this._taskText.removeEventListener("blur", this._confirmEditTask);
+    if (this._taskText.textContent === "") {
+      this._taskText.textContent = this._currentTaskText;
+    } else {
+      this._tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+      this._tasks.forEach((task) => {
+        if (task.task === this._currentTaskText) {
+          task.task = this._taskText.textContent;
+        }
+      });
+      localStorage.setItem("tasks", JSON.stringify(this._tasks));
+      this._taskText.contentEditable = false;
+      this._taskText.removeEventListener("blur", this._confirmEditTask);
+    }
   };
 
   _handleCheckTask(evt) {
@@ -25,6 +36,7 @@ export default class Task {
   }
 
   _handleEditTask() {
+    this._currentTaskText = this._taskText.textContent;
     this._taskText.contentEditable = true;
     this._taskText.focus();
     this._taskText.addEventListener("blur", this._confirmEditTask);
