@@ -16,25 +16,41 @@ const tasksList = new Section(
 
 const form = new Form(".todo-form", {
   submitForm: (task) => {
-    localStorage.setItem(
-      "tasks",
-      JSON.stringify([
-        ...JSON.parse(localStorage.getItem("tasks") || "[]"),
-        task,
-      ])
-    );
-    const newTask = createNewTask(task);
-    tasksList.addTask(newTask);
+    if (localStorage.getItem("tasks") === null) {
+      localStorage.setItem(
+        "tasks",
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem("tasks") || "[]"),
+          task,
+        ])
+      );
+      const newTask = createNewTask(task);
+      tasksList.addTask(newTask);
+      form.reset();
+    } else {
+      const tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+      tasks.some((todo) => {
+        return task.task === todo.task;
+      })
+        ? alert("Такое задание у вас уже есть!")
+        : (() => {
+            localStorage.setItem(
+              "tasks",
+              JSON.stringify([
+                ...JSON.parse(localStorage.getItem("tasks")),
+                task,
+              ])
+            );
+            const newTask = createNewTask(task);
+            tasksList.addTask(newTask);
+            form.reset();
+          })();
+    }
   },
 });
 
 function createNewTask(task) {
-  const item = new Task(task, "#todo-list__item", {
-    handleCopyTask: (task) => {
-      const newTask = createNewTask(task);
-      tasksList.addTask(newTask);
-    },
-  });
+  const item = new Task(task, "#todo-list__item");
   const newItem = item.generateTask();
   return newItem;
 }

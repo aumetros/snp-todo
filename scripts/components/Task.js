@@ -1,10 +1,9 @@
 export default class Task {
-  constructor(task, templateSelector, { handleCopyTask }) {
+  constructor(task, templateSelector) {
     this._task = task;
     this._text = this._task.task;
     this._taskComplete = this._task.complete;
     this._templateSelector = templateSelector;
-    this._handleCopyTask = handleCopyTask;
   }
 
   _getTaskTemplate() {
@@ -45,9 +44,6 @@ export default class Task {
   _setEventListeners() {
     this._check.addEventListener("click", (evt) => this._handleCheckTask(evt));
     this._editButton.addEventListener("click", () => this._handleEditTask());
-    this._copyButton.addEventListener("click", () =>
-      this._handleCopyTask(this._task)
-    );
     this._deleteButton.addEventListener("click", () => this._delete());
   }
 
@@ -64,9 +60,6 @@ export default class Task {
 
     this._editButton = this._taskElement.querySelector(
       ".todo-list__item_type_edit"
-    );
-    this._copyButton = this._taskElement.querySelector(
-      ".todo-list__item_type_copy"
     );
     this._deleteButton = this._taskElement.querySelector(
       ".todo-list__item_type_delete"
