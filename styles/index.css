@@ -27,5 +27,7 @@
 @import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_edit.css);
 @import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_copy.css);
 @import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_delete.css);
+@import url(./blocks/todo-list/__item-check/todo-list__item-check.css);
+@import url(./blocks/todo-list/__item-check/_checked/todo-list__item-check_checked.css);
 
 @import url(./blocks/footer/__title/footer__title.css);

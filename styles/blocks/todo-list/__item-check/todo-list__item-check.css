@@ -1,0 +1,23 @@
+.todo-list__item-check {
+  width: 28px;
+  height: 28px;
+  border: 2px solid black;
+  box-sizing: border-box;
+  margin-right: 10px;
+  position: relative;
+}
+
+.todo-list__item-check::after {
+  content: '';
+  position: absolute;
+  display: none;
+  top: 4px;
+  left: 8px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg)
+}
