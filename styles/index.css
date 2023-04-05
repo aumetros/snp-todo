@@ -16,7 +16,9 @@
 @import url(./blocks/todo-form/__input/todo-form__input.css);
 @import url(./blocks/todo-form/__button/todo-form__button.css);
 
-@import url(./blocks/todo-counters/todo-counters.css);
+@import url(./blocks/todo-navbar/todo-navbar.css);
+@import url(./blocks/todo-navbar/__clear/todo-navbar__clear.css);
+
 @import url(./blocks/todo-counters/__counter/todo-counters__counter.css);
 @import url(./blocks/todo-counters/__text/todo-counters__text.css);
 

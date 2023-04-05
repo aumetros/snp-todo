@@ -1,9 +1,10 @@
 export default class Task {
-  constructor(task, templateSelector) {
+  constructor(task, templateSelector, {handleDeleteTask}) {
     this._task = task;
     this._text = this._task.task;
     this._taskComplete = this._task.complete;
     this._templateSelector = templateSelector;
+    this._handleDeleteTask = handleDeleteTask;
   }
 
   _getTaskTemplate() {
@@ -44,7 +45,11 @@ export default class Task {
   _setEventListeners() {
     this._check.addEventListener("click", (evt) => this._handleCheckTask(evt));
     this._editButton.addEventListener("click", () => this._handleEditTask());
-    this._deleteButton.addEventListener("click", () => this._delete());
+    this._deleteButton.addEventListener("click", () => this._handleDeleteTask(this._taskText.textContent));
+  }
+
+  removeTaskElement() {
+    this._taskElement.remove();
   }
 
   _delete() {

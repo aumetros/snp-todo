@@ -1,7 +1,12 @@
 import Form from "./components/Form.js";
 import Task from "./components/Task.js";
 import Section from "./components/Section.js";
+import LocalStorage from "./components/LocalStorage.js";
 import Counter from "./components/Counter.js";
+
+const clearButton = document.querySelector(".todo-navbar__clear");
+
+const localStorageItem = new LocalStorage("tasks");
 
 const tasksList = new Section(
   {
@@ -50,7 +55,12 @@ const form = new Form(".todo-form", {
 });
 
 function createNewTask(task) {
-  const item = new Task(task, "#todo-list__item");
+  const item = new Task(task, "#todo-list__item", {
+    handleDeleteTask: (textContent) => {
+      item.removeTaskElement();
+      localStorageItem.removeTask(textContent);
+    },
+  });
   const newItem = item.generateTask();
   return newItem;
 }
@@ -59,7 +69,7 @@ function createNewTask(task) {
 
 // counter.setCounters();
 
-// tasksList.clear();
+clearButton.addEventListener("click", () => tasksList.clear());
 
 tasksList.loadTasks();
 
