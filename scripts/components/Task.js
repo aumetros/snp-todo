@@ -36,42 +36,27 @@ export default class Task {
   _setEventListeners() {
     this._check.addEventListener("click", (evt) => this._handleCheckTask(evt));
     this._editButton.addEventListener("click", () => this._handleEditTask());
-    this._deleteButton.addEventListener("click", () => this._handleDeleteTask(this._taskText.textContent));
+    this._deleteButton.addEventListener("click", () =>
+      this._handleDeleteTask(this._taskText.textContent)
+    );
   }
 
   removeTaskElement() {
     this._taskElement.remove();
   }
 
-  // _delete() {
-  //   this._taskElement.remove();
-  //   const tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
-
-  //   tasks.forEach((task) => {
-  //     if (task.task === this._taskText.textContent) {
-  //       tasks.splice(tasks.indexOf(task), 1);
-  //     }
-  //   });
-
-  //   localStorage.setItem("tasks", JSON.stringify(tasks));
-  // }
-
   generateTask() {
     this._taskElement = this._getTaskTemplate();
     this._taskText = this._taskElement.querySelector(".todo-list__item-text");
     this._taskText.textContent = this._text;
-
     this._check = this._taskElement.querySelector(".todo-list__item-check");
-
     this._editButton = this._taskElement.querySelector(
       ".todo-list__item_type_edit"
     );
     this._deleteButton = this._taskElement.querySelector(
       ".todo-list__item_type_delete"
     );
-
     this._setEventListeners();
-
     return this._taskElement;
   }
 }

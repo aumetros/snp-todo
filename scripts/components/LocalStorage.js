@@ -3,12 +3,16 @@ export default class LocalStorage {
     this._tasksKey = tasksKey;
   }
 
+  getArrayTasks() {
+    return Array.from(JSON.parse(localStorage.getItem(this._tasksKey)));
+  }
+
   isNull() {
     return localStorage.getItem("tasks") === null;
   }
 
   removeTask(textContent) {
-    const tasks = Array.from(JSON.parse(localStorage.getItem(this._tasksKey)));
+    const tasks = this.getArrayTasks();
     tasks.forEach((task) => {
       if (task.task === textContent) {
         tasks.splice(tasks.indexOf(task), 1);
@@ -21,9 +25,7 @@ export default class LocalStorage {
     if (textContent === "") {
       textContent = currentTextContent;
     } else {
-      this._tasks = Array.from(
-        JSON.parse(localStorage.getItem(this._tasksKey))
-      );
+      this._tasks = this.getArrayTasks();
       this._tasks.forEach((task) => {
         if (task.task === currentTextContent) {
           task.task = textContent;
@@ -48,20 +50,20 @@ export default class LocalStorage {
   }
 
   addItemToExistStorage(task) {
-    const tasks = Array.from(JSON.parse(localStorage.getItem(this._tasksKey)));
-      tasks.some((todo) => {
-        return task.task === todo.task;
-      })
-        ? alert("Такое задание у вас уже есть!")
-        : (() => {
-            localStorage.setItem(
-              this._tasksKey,
-              JSON.stringify([
-                ...JSON.parse(localStorage.getItem(this._tasksKey)),
-                task,
-              ])
-            );
-            this._addTask();
-          })();
+    const tasks = this.getArrayTasks();
+    tasks.some((todo) => {
+      return task.task === todo.task;
+    })
+      ? alert("Такое задание у вас уже есть!")
+      : (() => {
+          localStorage.setItem(
+            this._tasksKey,
+            JSON.stringify([
+              ...JSON.parse(localStorage.getItem(this._tasksKey)),
+              task,
+            ])
+          );
+          this._addTask();
+        })();
   }
 }

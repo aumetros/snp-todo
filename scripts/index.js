@@ -14,9 +14,16 @@ const tasksList = new Section(
       const listItem = createNewTask(task);
       tasksList.addTask(listItem);
     },
+    loadTasks: () => {
+      if (!tasksLocalStorage.isNull()) {
+        const tasks = tasksLocalStorage.getArrayTasks();
+        tasks.forEach((task) => {
+          tasksList.renderer(task);
+        });
+      }
+    },
   },
-  ".todo-list",
-  "tasks"
+  ".todo-list"
 );
 
 const form = new Form(".todo-form", {
