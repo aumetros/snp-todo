@@ -22,17 +22,13 @@ export default class LocalStorage {
   }
 
   editTask(textContent, currentTextContent) {
-    if (textContent === "") {
-      textContent = currentTextContent;
-    } else {
-      this._tasks = this.getArrayTasks();
-      this._tasks.forEach((task) => {
-        if (task.task === currentTextContent) {
-          task.task = textContent;
-        }
-      });
-      localStorage.setItem("tasks", JSON.stringify(this._tasks));
-    }
+    this._tasks = this.getArrayTasks();
+    this._tasks.forEach((task) => {
+      if (task.task === currentTextContent) {
+        task.task = textContent;
+      }
+    });
+    localStorage.setItem("tasks", JSON.stringify(this._tasks));
   }
 
   addItemToEmptyStorage(task) {

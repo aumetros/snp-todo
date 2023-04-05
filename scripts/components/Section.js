@@ -12,16 +12,4 @@ export default class Section {
   clear() {
     localStorage.clear();
   }
-
-//   loadTasks() {
-//     if (localStorage.getItem(this._tasks) !== null) {
-//       this._tasksArray = Array.from(
-//         JSON.parse(localStorage.getItem(this._tasks))
-//       );
-//       this._tasksArray.forEach((task) => {
-//         this._renderer(task);
-//       });
-//     }
-//     return;
-//   }
 }

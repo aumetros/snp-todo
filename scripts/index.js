@@ -53,7 +53,11 @@ function createNewTask(task) {
       tasksLocalStorage.removeTask(textContent);
     },
     editTask: (textContent, currentTextContent) => {
-      tasksLocalStorage.editTask(textContent, currentTextContent);
+      if (textContent === "") {
+        item._taskText.textContent = currentTextContent;
+      } else {
+        tasksLocalStorage.editTask(textContent, currentTextContent);
+      }
     },
   });
   const newItem = item.generateTask();
