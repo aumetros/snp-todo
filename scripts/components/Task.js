@@ -49,6 +49,15 @@ export default class Task {
 
   _delete() {
     this._taskElement.remove();
+    const tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+
+    tasks.forEach((task) => {
+      if (task.task === this._taskText.textContent) {
+        tasks.splice(tasks.indexOf(task), 1);
+      }
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }
 
   generateTask() {
