@@ -21,36 +21,21 @@ const tasksList = new Section(
 
 const form = new Form(".todo-form", {
   submitForm: (task) => {
-    if (localStorage.getItem("tasks") === null) {
-      localStorage.setItem(
-        "tasks",
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem("tasks") || "[]"),
-          task,
-        ])
-      );
-      const newTask = createNewTask(task);
-      tasksList.addTask(newTask);
-      form.reset();
-    } else {
-      const tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
-      tasks.some((todo) => {
-        return task.task === todo.task;
-      })
-        ? alert("Такое задание у вас уже есть!")
-        : (() => {
-            localStorage.setItem(
-              "tasks",
-              JSON.stringify([
-                ...JSON.parse(localStorage.getItem("tasks")),
-                task,
-              ])
-            );
+    tasksLocalStorage.isNull()
+      ? (() => {
+          tasksLocalStorage.addItemToEmptyStorage(task);
+          const newTask = createNewTask(task);
+          tasksList.addTask(newTask);
+          form.reset();
+        })()
+      : (() => {
+          tasksLocalStorage.setHandleAddTask(() => {
             const newTask = createNewTask(task);
             tasksList.addTask(newTask);
-            form.reset();
-          })();
-    }
+          });
+          tasksLocalStorage.addItemToExistStorage(task);
+          form.reset();
+        })();
   },
 });
 
@@ -67,8 +52,6 @@ function createNewTask(task) {
   const newItem = item.generateTask();
   return newItem;
 }
-
-// counter.setCounters();
 
 clearButton.addEventListener("click", () => tasksList.clear());
 
