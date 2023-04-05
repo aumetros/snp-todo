@@ -1,10 +1,11 @@
 export default class Task {
-  constructor(task, templateSelector, {handleDeleteTask}) {
+  constructor(task, templateSelector, { handleDeleteTask, editTask }) {
     this._task = task;
     this._text = this._task.task;
     this._taskComplete = this._task.complete;
     this._templateSelector = templateSelector;
     this._handleDeleteTask = handleDeleteTask;
+    this._editTask = editTask;
   }
 
   _getTaskTemplate() {
@@ -16,19 +17,9 @@ export default class Task {
   }
 
   _confirmEditTask = () => {
-    if (this._taskText.textContent === "") {
-      this._taskText.textContent = this._currentTaskText;
-    } else {
-      this._tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
-      this._tasks.forEach((task) => {
-        if (task.task === this._currentTaskText) {
-          task.task = this._taskText.textContent;
-        }
-      });
-      localStorage.setItem("tasks", JSON.stringify(this._tasks));
-      this._taskText.contentEditable = false;
-      this._taskText.removeEventListener("blur", this._confirmEditTask);
-    }
+    this._editTask(this._taskText.textContent, this._currentTaskText);
+    this._taskText.contentEditable = false;
+    this._taskText.removeEventListener("blur", this._confirmEditTask);
   };
 
   _handleCheckTask(evt) {
@@ -52,18 +43,18 @@ export default class Task {
     this._taskElement.remove();
   }
 
-  _delete() {
-    this._taskElement.remove();
-    const tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+  // _delete() {
+  //   this._taskElement.remove();
+  //   const tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
 
-    tasks.forEach((task) => {
-      if (task.task === this._taskText.textContent) {
-        tasks.splice(tasks.indexOf(task), 1);
-      }
-    });
+  //   tasks.forEach((task) => {
+  //     if (task.task === this._taskText.textContent) {
+  //       tasks.splice(tasks.indexOf(task), 1);
+  //     }
+  //   });
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }
+  //   localStorage.setItem("tasks", JSON.stringify(tasks));
+  // }
 
   generateTask() {
     this._taskElement = this._getTaskTemplate();

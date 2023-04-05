@@ -3,10 +3,6 @@ export default class LocalStorage {
     this._tasksKey = tasksKey;
   }
 
-  test() {
-    console.log(this._tasks.length);
-  }
-
   removeTask(textContent) {
     const tasks = Array.from(JSON.parse(localStorage.getItem(this._tasksKey)));
     tasks.forEach((task) => {
@@ -15,5 +11,19 @@ export default class LocalStorage {
       }
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  editTask(textContent, currentTextContent) {
+    if (textContent === "") {
+      textContent = currentTextContent;
+    } else {
+      this._tasks = Array.from(JSON.parse(localStorage.getItem(this._tasksKey)));
+      this._tasks.forEach((task) => {
+        if (task.task === currentTextContent) {
+          task.task = textContent;
+        }
+      });
+      localStorage.setItem("tasks", JSON.stringify(this._tasks));      
+    }
   }
 }
