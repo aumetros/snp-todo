@@ -11,6 +11,10 @@ export default class LocalStorage {
     return localStorage.getItem("tasks") === null;
   }
 
+  clearTasks() {
+    localStorage.clear();
+  }
+
   removeTask(textContent) {
     const tasks = this.getArrayTasks();
     tasks.forEach((task) => {

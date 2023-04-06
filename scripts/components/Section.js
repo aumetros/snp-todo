@@ -9,7 +9,9 @@ export default class Section {
     this._containerSelector.append(task);
   }
 
-  clear() {
-    localStorage.clear();
+  clearTasks() {
+    this._containerSelector.innerHTML = '';
   }
+
+ 
 }

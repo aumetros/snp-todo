@@ -9,7 +9,12 @@ const clearButton = document.querySelector(".todo-navbar__clear");
 
 const tasksLocalStorage = new LocalStorage("tasks");
 
-const navBar = new NavigationBar('.todo-navbar');
+const navBar = new NavigationBar('.todo-navbar', {
+  clearTasks: () => {
+    tasksLocalStorage.clearTasks();
+    tasksList.clearTasks();
+  }
+});
 
 const tasksList = new Section(
   {
@@ -74,3 +79,4 @@ function createNewTask(task) {
 tasksList.loadTasks();
 
 form.setEventListeners();
+navBar.setEventListeners();
