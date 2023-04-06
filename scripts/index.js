@@ -59,10 +59,16 @@ function createNewTask(task) {
         tasksLocalStorage.editTask(textContent, currentTextContent);
       }
     },
+    handleCompleteTask: (evt) => {
+      evt.target.classList.toggle("todo-list__item-check_checked");
+      tasksLocalStorage.toggleCompleteTask(evt);
+    },
   });
   const newItem = item.generateTask();
   return newItem;
 }
+
+console.log(tasksLocalStorage.getArrayTasks());
 
 clearButton.addEventListener("click", () => tasksList.clear());
 

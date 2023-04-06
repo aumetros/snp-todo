@@ -31,6 +31,20 @@ export default class LocalStorage {
     localStorage.setItem("tasks", JSON.stringify(this._tasks));
   }
 
+  toggleCompleteTask(evt) {
+    this._tasks = this.getArrayTasks();
+    this._tasks.forEach((task) => {
+      if (task.task === evt.target.nextElementSibling.textContent) {
+        task.complete = !task.complete;
+      }
+    });
+    localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
+  }
+
+  setHandleAddTask(callback) {
+    this._addTask = callback;
+  }
+
   addItemToEmptyStorage(task) {
     localStorage.setItem(
       this._tasksKey,
@@ -39,10 +53,6 @@ export default class LocalStorage {
         task,
       ])
     );
-  }
-
-  setHandleAddTask(callback) {
-    this._addTask = callback;
   }
 
   addItemToExistStorage(task) {

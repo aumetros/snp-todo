@@ -1,10 +1,11 @@
 export default class Task {
-  constructor(task, templateSelector, { handleDeleteTask, editTask }) {
+  constructor(task, templateSelector, { handleDeleteTask, editTask, handleCompleteTask }) {
     this._task = task;
     this._text = this._task.task;
     this._taskComplete = this._task.complete;
     this._templateSelector = templateSelector;
     this._handleDeleteTask = handleDeleteTask;
+    this._handleCompleteTask = handleCompleteTask;
     this._editTask = editTask;
   }
 
@@ -22,8 +23,10 @@ export default class Task {
     this._taskText.removeEventListener("blur", this._confirmEditTask);
   };
 
-  _handleCheckTask(evt) {
-    evt.target.classList.toggle("todo-list__item-check_checked");
+  _handleCheckTask() {
+    if (this._taskComplete) {
+      this._check.classList.toggle("todo-list__item-check_checked");
+    }   
   }
 
   _handleEditTask() {
@@ -34,7 +37,7 @@ export default class Task {
   }
 
   _setEventListeners() {
-    this._check.addEventListener("click", (evt) => this._handleCheckTask(evt));
+    this._check.addEventListener("click", (evt) => this._handleCompleteTask(evt));
     this._editButton.addEventListener("click", () => this._handleEditTask());
     this._deleteButton.addEventListener("click", () =>
       this._handleDeleteTask(this._taskText.textContent)
@@ -56,6 +59,7 @@ export default class Task {
     this._deleteButton = this._taskElement.querySelector(
       ".todo-list__item_type_delete"
     );
+    this._handleCheckTask();
     this._setEventListeners();
     return this._taskElement;
   }
