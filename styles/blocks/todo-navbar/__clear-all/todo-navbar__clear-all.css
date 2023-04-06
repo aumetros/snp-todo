@@ -1,8 +1,8 @@
-.todo-navbar__clear {
+.todo-navbar__clear-all {
   cursor: pointer;
 }
 
-.todo-navbar__clear:hover {
+.todo-navbar__clear-all:hover {
   text-decoration: underline;
   text-underline-offset: 5px;
 }

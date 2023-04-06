@@ -2,11 +2,14 @@ import Form from "./components/Form.js";
 import Task from "./components/Task.js";
 import Section from "./components/Section.js";
 import LocalStorage from "./components/LocalStorage.js";
+import NavigationBar from "./components/NavigationBar.js";
 // import Counter from "./components/Counter.js";
 
 const clearButton = document.querySelector(".todo-navbar__clear");
 
 const tasksLocalStorage = new LocalStorage("tasks");
+
+const navBar = new NavigationBar('.todo-navbar');
 
 const tasksList = new Section(
   {
@@ -67,10 +70,6 @@ function createNewTask(task) {
   const newItem = item.generateTask();
   return newItem;
 }
-
-console.log(tasksLocalStorage.getArrayTasks());
-
-clearButton.addEventListener("click", () => tasksList.clear());
 
 tasksList.loadTasks();
 
