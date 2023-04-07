@@ -1,0 +1,7 @@
+.todo-navbar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}

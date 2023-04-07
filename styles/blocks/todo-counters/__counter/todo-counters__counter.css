@@ -1,0 +1,7 @@
+.todo-counters__counter {
+  margin-right: 20px;
+}
+
+.todo-counters__counter:last-of-type {
+  margin-right: 0;
+}

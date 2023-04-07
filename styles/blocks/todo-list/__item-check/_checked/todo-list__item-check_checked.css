@@ -1,0 +1,3 @@
+.todo-list__item-check_checked::after {
+  display: block;
+}

@@ -7,3 +7,30 @@
 @import url(./blocks/page/page.css);
 
 @import url(./blocks/header/__title/header__title.css);
+
+@import url(./blocks/content/content.css);
+
+@import url(./blocks/todo/__container/todo__container.css);
+
+@import url(./blocks/todo-form/todo-form.css);
+@import url(./blocks/todo-form/__input/todo-form__input.css);
+@import url(./blocks/todo-form/__button/todo-form__button.css);
+
+@import url(./blocks/todo-navbar/todo-navbar.css);
+@import url(./blocks/todo-navbar/__clear-all/todo-navbar__clear-all.css);
+
+
+@import url(./blocks/todo-counters/__counter/todo-counters__counter.css);
+@import url(./blocks/todo-counters/__text/todo-counters__text.css);
+
+@import url(./blocks/todo-list/todo-list.css);
+@import url(./blocks/todo-list/__item/todo-list__item.css);
+@import url(./blocks/todo-list/__item-text/todo-list__item-text.css);
+@import url(./blocks/todo-list/__item-btn/todo-list__item-btn.css);
+@import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_edit.css);
+@import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_copy.css);
+@import url(./blocks/todo-list/__item-btn/_type/todo-list__item_type_delete.css);
+@import url(./blocks/todo-list/__item-check/todo-list__item-check.css);
+@import url(./blocks/todo-list/__item-check/_checked/todo-list__item-check_checked.css);
+
+@import url(./blocks/footer/__title/footer__title.css);
