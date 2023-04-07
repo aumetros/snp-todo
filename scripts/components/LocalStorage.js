@@ -15,6 +15,16 @@ export default class LocalStorage {
     localStorage.clear();
   }
 
+  clearCompletedTasks() {
+    const tasks = this.getArrayTasks();
+    tasks.forEach((task) => {
+      if (task.complete === true) {
+        tasks.splice(tasks.indexOf(task), 1);
+      }
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
   removeTask(textContent) {
     const tasks = this.getArrayTasks();
     tasks.forEach((task) => {

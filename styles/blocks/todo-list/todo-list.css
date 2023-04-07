@@ -1,6 +1,5 @@
-.todo-list {
-  margin: 0 auto;
+.todo-list {  
   padding: 0;
-  max-width: 900px;
+  margin: 0;
   list-style: none;
 }
