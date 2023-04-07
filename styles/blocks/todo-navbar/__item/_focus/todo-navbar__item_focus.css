@@ -1,0 +1,4 @@
+.todo-navbar__item_focus {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}

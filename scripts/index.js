@@ -8,15 +8,18 @@ import NavigationBar from "./components/NavigationBar.js";
 const tasksLocalStorage = new LocalStorage("tasks");
 
 const navBar = new NavigationBar(".todo-navbar", {
-  renderActiveTasks: () => {
+  renderActiveTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
     tasksList.loadTasks(false, "active");
   },
-  renderCompleteTasks: () => {
+  renderCompleteTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
     tasksList.loadTasks(true, "complete");
   },
-  renderAllTasks: () => {
+  renderAllTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
     tasksList.loadTasks(null, "all");
   },
