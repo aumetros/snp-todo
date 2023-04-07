@@ -47,6 +47,16 @@ export default class NavigationBar {
     }
   }
 
+  getItemWithFocus() {
+    this._navItems = this._navbar.querySelectorAll(".todo-navbar__item");
+    this._navItems.forEach((item) => {
+      if (item.classList.contains("todo-navbar__item_focus")) {
+        this._currentItemId = item.id;
+      }
+    });
+    return this._currentItemId;
+  }
+
   setEventListeners() {
     this._activeTasks.addEventListener("click", this._renderActiveTasks);
     this._completeTasks.addEventListener("click", this._renderCompleteTasks);

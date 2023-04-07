@@ -68,14 +68,14 @@ const form = new Form(".todo-form", {
     tasksLocalStorage.isNull()
       ? (() => {
           tasksLocalStorage.addItemToEmptyStorage(task);
-          const newTask = createNewTask(task);
+          const newTask = createNewTask(task, navBar.getItemWithFocus());
           tasksList.addTask(newTask);
           form.reset();
           counter.handleCounters(tasksLocalStorage.getArrayTasks());
         })()
       : (() => {
           tasksLocalStorage.setHandleAddTask(() => {
-            const newTask = createNewTask(task);
+            const newTask = createNewTask(task, navBar.getItemWithFocus());
             tasksList.addTask(newTask);
           });
           tasksLocalStorage.addItemToExistStorage(task);

@@ -10,8 +10,6 @@ export default class Section {
   }
 
   clearTasks() {
-    this._containerSelector.innerHTML = '';
+    this._containerSelector.innerHTML = "";
   }
-
- 
 }
