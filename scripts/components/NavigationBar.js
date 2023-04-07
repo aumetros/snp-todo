@@ -1,7 +1,13 @@
 export default class NavigationBar {
   constructor(
     navbarSelector,
-    { renderActiveTasks, renderCompleteTasks, renderAllTasks, clearCompletedTasks, clearAllTasks }
+    {
+      renderActiveTasks,
+      renderCompleteTasks,
+      renderAllTasks,
+      clearCompletedTasks,
+      clearAllTasks,
+    }
   ) {
     this._navbar = document.querySelector(navbarSelector);
     this._navItems = this._navbar.querySelectorAll(".todo-navbar__item");
@@ -24,12 +30,31 @@ export default class NavigationBar {
     this._clearCompletedTasks = clearCompletedTasks;
     this._clearAllTasks = clearAllTasks;
   }
-  
+
+  handleItemsFocus(evt) {
+    if (evt.target !== this._clearCompletedButton) {
+      this._navItems.forEach((item) => {
+        if (item === evt.target) {
+          item.classList.add("todo-navbar__item_focus");
+        } else {
+          item.classList.remove("todo-navbar__item_focus");
+        }
+      });
+    } else {
+      this._activeTasks.classList.add("todo-navbar__item_focus");
+      this._completeTasks.classList.remove("todo-navbar__item_focus");
+      this._allTasks.classList.remove("todo-navbar__item_focus");
+    }
+  }
+
   setEventListeners() {
     this._activeTasks.addEventListener("click", this._renderActiveTasks);
     this._completeTasks.addEventListener("click", this._renderCompleteTasks);
     this._allTasks.addEventListener("click", this._renderAllTasks);
-    this._clearCompletedButton.addEventListener('click', this._clearCompletedTasks);
+    this._clearCompletedButton.addEventListener(
+      "click",
+      this._clearCompletedTasks
+    );
     this._clearAllButton.addEventListener("click", this._clearAllTasks);
   }
 }
