@@ -4,7 +4,7 @@ export default class LocalStorage {
   }
 
   getArrayTasks() {
-    return Array.from(JSON.parse(localStorage.getItem(this._tasksKey)));
+    return Array.from(JSON.parse(localStorage.getItem(this._tasksKey) || "[]"));
   }
 
   isNull() {

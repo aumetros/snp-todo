@@ -5,15 +5,25 @@ import LocalStorage from "./components/LocalStorage.js";
 import NavigationBar from "./components/NavigationBar.js";
 // import Counter from "./components/Counter.js";
 
-const clearButton = document.querySelector(".todo-navbar__clear");
-
 const tasksLocalStorage = new LocalStorage("tasks");
 
-const navBar = new NavigationBar('.todo-navbar', {
+const navBar = new NavigationBar(".todo-navbar", {
+  renderActiveTasks: () => {
+    tasksList.clearTasks();
+    tasksList.loadTasks(false);
+  },
+  renderCompleteTasks: () => {
+    tasksList.clearTasks();
+    tasksList.loadTasks(true);
+  },
+  renderAllTasks: () => {
+    tasksList.clearTasks();
+    tasksList.loadTasks();
+  },
   clearTasks: () => {
     tasksLocalStorage.clearTasks();
     tasksList.clearTasks();
-  }
+  },
 });
 
 const tasksList = new Section(
@@ -22,11 +32,17 @@ const tasksList = new Section(
       const listItem = createNewTask(task);
       tasksList.addTask(listItem);
     },
-    loadTasks: () => {
-      if (!tasksLocalStorage.isNull()) {
-        const tasks = tasksLocalStorage.getArrayTasks();
+    loadTasks: (taskStatus) => {
+      const tasks = tasksLocalStorage.getArrayTasks();
+      if (taskStatus === undefined) {
         tasks.forEach((task) => {
           tasksList.renderer(task);
+        });
+      } else {
+        tasks.forEach((task) => {
+          if (task.complete === taskStatus) {
+            tasksList.renderer(task);
+          }
         });
       }
     },
@@ -76,7 +92,7 @@ function createNewTask(task) {
   return newItem;
 }
 
-tasksList.loadTasks();
+tasksList.loadTasks(false);
 
 form.setEventListeners();
 navBar.setEventListeners();
