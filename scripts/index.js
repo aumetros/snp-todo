@@ -3,9 +3,11 @@ import Task from "./components/Task.js";
 import Section from "./components/Section.js";
 import LocalStorage from "./components/LocalStorage.js";
 import NavigationBar from "./components/NavigationBar.js";
-// import Counter from "./components/Counter.js";
+import Counter from "./components/Counter.js";
 
 const tasksLocalStorage = new LocalStorage("tasks");
+
+const counter = new Counter(".todo-counters");
 
 const navBar = new NavigationBar(".todo-navbar", {
   renderActiveTasks: (evt) => {
@@ -28,10 +30,12 @@ const navBar = new NavigationBar(".todo-navbar", {
     tasksLocalStorage.clearCompletedTasks();
     tasksList.clearTasks();
     tasksList.loadTasks(false, "active");
+    counter.handleCounters(tasksLocalStorage.getArrayTasks());
   },
   clearAllTasks: () => {
     tasksLocalStorage.clearTasks();
     tasksList.clearTasks();
+    counter.handleCounters(tasksLocalStorage.getArrayTasks());
   },
 });
 
@@ -67,6 +71,7 @@ const form = new Form(".todo-form", {
           const newTask = createNewTask(task);
           tasksList.addTask(newTask);
           form.reset();
+          counter.handleCounters(tasksLocalStorage.getArrayTasks());
         })()
       : (() => {
           tasksLocalStorage.setHandleAddTask(() => {
@@ -75,6 +80,7 @@ const form = new Form(".todo-form", {
           });
           tasksLocalStorage.addItemToExistStorage(task);
           form.reset();
+          counter.handleCounters(tasksLocalStorage.getArrayTasks());
         })();
   },
 });
@@ -82,8 +88,9 @@ const form = new Form(".todo-form", {
 function createNewTask(task, navSection) {
   const item = new Task(task, navSection, "#todo-list__item", {
     handleDeleteTask: (textContent) => {
-      item.removeTaskElement();
       tasksLocalStorage.removeTask(textContent);
+      item.removeTaskElement();
+      counter.handleCounters(tasksLocalStorage.getArrayTasks());
     },
     editTask: (textContent, currentTextContent) => {
       if (textContent === "") {
@@ -98,8 +105,9 @@ function createNewTask(task, navSection) {
       if (navSection !== "all") {
         setTimeout(() => {
           item.removeTaskElement();
-        }, 500);
+        }, 300);
       }
+      counter.handleCounters(tasksLocalStorage.getArrayTasks());
     },
   });
   const newItem = item.generateTask();
@@ -110,3 +118,5 @@ tasksList.loadTasks(false);
 
 form.setEventListeners();
 navBar.setEventListeners();
+
+counter.handleCounters(tasksLocalStorage.getArrayTasks());
