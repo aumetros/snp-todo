@@ -1,6 +1,7 @@
 export default class Task {
-  constructor(task, templateSelector, { handleDeleteTask, editTask, handleCompleteTask }) {
+  constructor(task, navSection, templateSelector, { handleDeleteTask, editTask, handleCompleteTask }) {
     this._task = task;
+    this.navSection = navSection;
     this._text = this._task.task;
     this._taskComplete = this._task.complete;
     this._templateSelector = templateSelector;
@@ -44,7 +45,7 @@ export default class Task {
     );
   }
 
-  removeTaskElement() {
+  removeTaskElement = () => {
     this._taskElement.remove();
   }
 

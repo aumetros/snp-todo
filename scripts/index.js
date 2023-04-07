@@ -10,15 +10,15 @@ const tasksLocalStorage = new LocalStorage("tasks");
 const navBar = new NavigationBar(".todo-navbar", {
   renderActiveTasks: () => {
     tasksList.clearTasks();
-    tasksList.loadTasks(false);
+    tasksList.loadTasks(false, "active");
   },
   renderCompleteTasks: () => {
     tasksList.clearTasks();
-    tasksList.loadTasks(true);
+    tasksList.loadTasks(true, "complete");
   },
   renderAllTasks: () => {
     tasksList.clearTasks();
-    tasksList.loadTasks();
+    tasksList.loadTasks(null, "all");
   },
   clearTasks: () => {
     tasksLocalStorage.clearTasks();
@@ -28,20 +28,20 @@ const navBar = new NavigationBar(".todo-navbar", {
 
 const tasksList = new Section(
   {
-    renderer: (task) => {
-      const listItem = createNewTask(task);
+    renderer: (task, navSection) => {
+      const listItem = createNewTask(task, navSection);
       tasksList.addTask(listItem);
     },
-    loadTasks: (taskStatus) => {
+    loadTasks: (taskStatus, navSection) => {
       const tasks = tasksLocalStorage.getArrayTasks();
-      if (taskStatus === undefined) {
+      if (taskStatus === null) {
         tasks.forEach((task) => {
-          tasksList.renderer(task);
+          tasksList.renderer(task, navSection);
         });
       } else {
         tasks.forEach((task) => {
           if (task.complete === taskStatus) {
-            tasksList.renderer(task);
+            tasksList.renderer(task, navSection);
           }
         });
       }
@@ -70,8 +70,8 @@ const form = new Form(".todo-form", {
   },
 });
 
-function createNewTask(task) {
-  const item = new Task(task, "#todo-list__item", {
+function createNewTask(task, navSection) {
+  const item = new Task(task, navSection, "#todo-list__item", {
     handleDeleteTask: (textContent) => {
       item.removeTaskElement();
       tasksLocalStorage.removeTask(textContent);
@@ -86,6 +86,11 @@ function createNewTask(task) {
     handleCompleteTask: (evt) => {
       evt.target.classList.toggle("todo-list__item-check_checked");
       tasksLocalStorage.toggleCompleteTask(evt);
+      if (navSection !== "all") {
+        setTimeout(() => {
+          item.removeTaskElement();
+        }, 500);
+      }
     },
   });
   const newItem = item.generateTask();
