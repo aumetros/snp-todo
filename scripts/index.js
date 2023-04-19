@@ -13,23 +13,23 @@ const navBar = new NavigationBar(".todo-navbar", {
   renderActiveTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks(false, "active");
+    tasksList.loadTasks(false);
   },
   renderCompleteTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks(true, "complete");
+    tasksList.loadTasks(true);
   },
   renderAllTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks(null, "all");
+    tasksList.loadTasks(null);
   },
   clearCompletedTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksLocalStorage.clearCompletedTasks();
     tasksList.clearTasks();
-    tasksList.loadTasks(false, "active");
+    tasksList.loadTasks(false);
     counter.handleCounters(tasksLocalStorage.getArrayTasks());
   },
   clearAllTasks: () => {
@@ -41,20 +41,20 @@ const navBar = new NavigationBar(".todo-navbar", {
 
 const tasksList = new Section(
   {
-    renderer: (task, navSection) => {
-      const listItem = createNewTask(task, navSection);
+    renderer: (task) => {
+      const listItem = createNewTask(task);
       tasksList.addTask(listItem);
     },
-    loadTasks: (taskStatus, navSection) => {
+    loadTasks: (taskCompleteStatus) => {
       const tasks = tasksLocalStorage.getArrayTasks();
-      if (taskStatus === null) {
+      if (taskCompleteStatus === null) {
         tasks.forEach((task) => {
-          tasksList.renderer(task, navSection);
+          tasksList.renderer(task);
         });
       } else {
         tasks.forEach((task) => {
-          if (task.complete === taskStatus) {
-            tasksList.renderer(task, navSection);
+          if (task.complete === taskCompleteStatus) {
+            tasksList.renderer(task);
           }
         });
       }
@@ -77,7 +77,7 @@ const form = new Form(".todo-form", {
     } else {
       if (!tasksLocalStorage.isDublicateTask(task, tasks)) {
         tasksLocalStorage.addItemToStorage(task);
-        const newTask = createNewTask(task, navBar.getItemWithFocus());
+        const newTask = createNewTask(task);
         tasksList.addTask(newTask);
         form.reset();
         counter.handleCounters(tasksLocalStorage.getArrayTasks());
@@ -88,15 +88,19 @@ const form = new Form(".todo-form", {
   },
 });
 
-function createNewTask(task, navSection) {
-  const item = new Task(task, navSection, "#todo-list__item", {
+function createNewTask(task) {
+  const item = new Task(task, "#todo-list__item", {
     handleDeleteTask: (textContent) => {
       tasksLocalStorage.removeTask(textContent);
       item.removeTaskElement();
       counter.handleCounters(tasksLocalStorage.getArrayTasks());
     },
     editTask: (textContent, currentTextContent) => {
+      const tasks = tasksLocalStorage.getArrayTasks();
       if (textContent === "") {
+        item._taskText.textContent = currentTextContent;
+      } else if (tasksLocalStorage.isDublicateTask(task, tasks)) {
+        alert("Такое задание у вас уже есть!");
         item._taskText.textContent = currentTextContent;
       } else {
         tasksLocalStorage.editTask(textContent, currentTextContent);
