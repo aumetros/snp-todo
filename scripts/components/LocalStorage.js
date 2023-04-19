@@ -7,10 +7,6 @@ export default class LocalStorage {
     return Array.from(JSON.parse(localStorage.getItem(this._tasksKey) || "[]"));
   }
 
-  isNull() {
-    return localStorage.getItem("tasks") === null;
-  }
-
   clearTasks() {
     localStorage.clear();
   }
@@ -55,11 +51,14 @@ export default class LocalStorage {
     localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
   }
 
-  setHandleAddTask(callback) {
-    this._addTask = callback;
+  isDublicateTask(task, tasks) {
+    const dublicate = tasks.some((todo) => {
+      return task.task === todo.task;
+    });
+    return dublicate;
   }
 
-  addItemToEmptyStorage(task) {
+  addItemToStorage(task) {
     localStorage.setItem(
       this._tasksKey,
       JSON.stringify([
@@ -67,23 +66,5 @@ export default class LocalStorage {
         task,
       ])
     );
-  }
-
-  addItemToExistStorage(task) {
-    const tasks = this.getArrayTasks();
-    tasks.some((todo) => {
-      return task.task === todo.task;
-    })
-      ? alert("Такое задание у вас уже есть!")
-      : (() => {
-          localStorage.setItem(
-            this._tasksKey,
-            JSON.stringify([
-              ...JSON.parse(localStorage.getItem(this._tasksKey) || "[]"),
-              task,
-            ])
-          );
-          // this._addTask();
-        })();
   }
 }
