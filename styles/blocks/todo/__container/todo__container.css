@@ -5,3 +5,9 @@
   padding: 40px 40px 20px;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 550px) {
+  .todo__container {
+    padding: 30px 10px 10px;
+  }
+}

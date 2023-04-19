@@ -7,7 +7,7 @@
 }
 
 .todo-list__item-check::after {
-  content: '';
+  content: "";
   position: absolute;
   display: none;
   top: 4px;
@@ -18,5 +18,17 @@
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
-  transform: rotate(45deg)
+  transform: rotate(45deg);
+}
+
+@media screen and (max-width: 550px) {
+  .todo-list__item-check {
+    width: 20px;
+    height: 20px;
+  }
+
+  .todo-list__item-check::after {
+    top: 0px;
+    left: 5px;
+  }
 }

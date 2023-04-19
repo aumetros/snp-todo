@@ -54,10 +54,10 @@ export default class Task {
     this._taskText.textContent = this._text;
     this._check = this._taskElement.querySelector(".todo-list__item-check");
     this._editButton = this._taskElement.querySelector(
-      ".todo-list__item_type_edit"
+      ".todo-list__item-btn_type_edit"
     );
     this._deleteButton = this._taskElement.querySelector(
-      ".todo-list__item_type_delete"
+      ".todo-list__item-btn_type_delete"
     );
     this._handleCheckTask();
     this._setEventListeners();

@@ -6,3 +6,19 @@
   line-height: 98px;
   text-align: center;
 }
+
+@media screen and (max-width: 650px) {
+  .header__title {
+    margin: 20px auto;
+    max-width: 365px;
+    font-size: 66px;
+    font-weight: 700;
+    line-height: 70px;
+  }
+}
+
+@media screen  and (max-width: 380px){
+  .header__title {
+    font-size: 56px;
+  }
+}

@@ -20,3 +20,12 @@
 .todo-form__button:active {
   background-color: #627F7E;
 }
+
+@media screen and (max-width: 768px) {
+  .todo-form__button{
+    min-width: 134px;
+    min-height: 47px;
+    margin-right: 5px;
+    padding: 12px 29.5px;
+  }
+}

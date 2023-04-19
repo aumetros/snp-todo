@@ -15,11 +15,11 @@
 
 <body class="body">
   <div class="page">
-    <header>
+    <header class="header">
       <h1 class="header__title">Список дел</h1>
     </header>
     <main class="content">
-      <section class="todo">
+      <div class="todo">
         <div class="todo__container">
           <form class="todo-form">
             <input type="text" name="todo" class="todo-form__input" placeholder="Добавьте следующее дело" required>
@@ -45,7 +45,7 @@
         </div>
         <ul class="todo-list">
         </ul>
-      </section>
+      </div>
     </main>
     <footer class="footer">
       <h2 class="footer__title">&copy; 2023. Алексей Шевляков</h2>
@@ -55,12 +55,18 @@
       <li class="todo-list__item">
         <span class="todo-list__item-check"></span>
         <span class="todo-list__item-text"></span>
-        <button class="todo-list__item-btn todo-list__item_type_edit" type="button" title="Редактировать"></button>
-        <button class="todo-list__item-btn todo-list__item_type_delete" type="button" title="Удалить"></button>
+        <button class="todo-list__item-btn todo-list__item-btn_type_edit" type="button" title="Редактировать"></button>
+        <button class="todo-list__item-btn todo-list__item-btn_type_delete" type="button" title="Удалить"></button>
       </li>
     </template>
 
     <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./scripts/components/Form.js"></script>
+    <script type="module" src="./scripts/components/Task.js"></script>
+    <script type="module" src="./scripts/components/Section.js"></script>
+    <script type="module" src="./scripts/components/LocalStorage.js"></script>
+    <script type="module" src="./scripts/components/NavigationBar.js"></script>
+    <script type="module" src="./scripts/components/Counter.js"></script>
 
   </div>
 </body>
