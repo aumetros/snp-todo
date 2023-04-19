@@ -67,7 +67,7 @@ const form = new Form(".todo-form", {
   submitForm: (task) => {
     const tasks = tasksLocalStorage.getArrayTasks();
     if (navBar.getItemWithFocus() === "complete") {
-      if (!tasksLocalStorage.isDublicateTask(task, tasks)) {
+      if (!tasksLocalStorage.isDublicateTask(task.task, tasks)) {
         tasksLocalStorage.addItemToStorage(task);
         form.reset();
         counter.handleCounters(tasksLocalStorage.getArrayTasks());
@@ -75,7 +75,7 @@ const form = new Form(".todo-form", {
         alert("Такое задание у вас уже есть!");
       }
     } else {
-      if (!tasksLocalStorage.isDublicateTask(task, tasks)) {
+      if (!tasksLocalStorage.isDublicateTask(task.task, tasks)) {
         tasksLocalStorage.addItemToStorage(task);
         const newTask = createNewTask(task);
         tasksList.addTask(newTask);
@@ -99,7 +99,7 @@ function createNewTask(task) {
       const tasks = tasksLocalStorage.getArrayTasks();
       if (textContent === "") {
         item._taskText.textContent = currentTextContent;
-      } else if (!tasksLocalStorage.isDublicateTask(textContent, tasks)) {
+      } else if (tasksLocalStorage.isDublicateTask(textContent, tasks)) {
         alert("Такое задание у вас уже есть!");
         item._taskText.textContent = currentTextContent;
       } else {
