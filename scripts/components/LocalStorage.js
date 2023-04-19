@@ -7,10 +7,6 @@ export default class LocalStorage {
     return Array.from(JSON.parse(localStorage.getItem(this._tasksKey) || "[]"));
   }
 
-  isNull() {
-    return localStorage.getItem("tasks") === null;
-  }
-
   clearTasks() {
     localStorage.clear();
   }
