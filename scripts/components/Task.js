@@ -17,17 +17,17 @@ export default class Task {
     return taskElement;
   }
 
-  _confirmEditTask = () => {
-    this._editTask(this._taskText.textContent, this._currentTaskText);
-    this._taskText.contentEditable = false;
-    this._taskText.removeEventListener("blur", this._confirmEditTask);
-  };
-
   _handleCheckTask() {
     if (this._taskComplete) {
       this._check.classList.toggle("todo-list__item-check_checked");
     }   
   }
+  
+  _confirmEditTask = () => {
+    this._editTask(this._taskText.textContent, this._currentTaskText);
+    this._taskText.contentEditable = false;
+    this._taskText.removeEventListener("blur", this._confirmEditTask);
+  };
 
   _handleEditTask() {
     this._currentTaskText = this._taskText.textContent;
