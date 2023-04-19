@@ -65,23 +65,43 @@ const tasksList = new Section(
 
 const form = new Form(".todo-form", {
   submitForm: (task) => {
-    tasksLocalStorage.isNull()
-      ? (() => {
-          tasksLocalStorage.addItemToEmptyStorage(task);
-          const newTask = createNewTask(task, navBar.getItemWithFocus());
-          tasksList.addTask(newTask);
-          form.reset();
-          counter.handleCounters(tasksLocalStorage.getArrayTasks());
-        })()
-      : (() => {
-          tasksLocalStorage.setHandleAddTask(() => {
-            const newTask = createNewTask(task, navBar.getItemWithFocus());
-            tasksList.addTask(newTask);
-          });
-          tasksLocalStorage.addItemToExistStorage(task);
-          form.reset();
-          counter.handleCounters(tasksLocalStorage.getArrayTasks());
-        })();
+    if (navBar.getItemWithFocus() === "complete") {
+      tasksLocalStorage.addItemToExistStorage(task);
+      form.reset();
+      counter.handleCounters(tasksLocalStorage.getArrayTasks());
+
+    } else {
+      tasksLocalStorage.addItemToExistStorage(task);
+      const newTask = createNewTask(task, navBar.getItemWithFocus());
+      tasksList.addTask(newTask);
+      form.reset();
+      counter.handleCounters(tasksLocalStorage.getArrayTasks());
+    }
+
+
+    //   tasksLocalStorage.addItemToExistStorage(task);
+    // const newTask = createNewTask(task, navBar.getItemWithFocus());
+    // tasksList.addTask(newTask);
+    // form.reset();
+    // counter.handleCounters(tasksLocalStorage.getArrayTasks());
+
+    // tasksLocalStorage.isNull()
+    //   ? (() => {
+    //     tasksLocalStorage.addItemToExistStorage(task);
+    //       const newTask = createNewTask(task, navBar.getItemWithFocus());
+    //       tasksList.addTask(newTask);
+    //       form.reset();
+    //       counter.handleCounters(tasksLocalStorage.getArrayTasks());
+    //     })()
+    //   : (() => {
+    //       tasksLocalStorage.setHandleAddTask(() => {
+    //         const newTask = createNewTask(task, navBar.getItemWithFocus());
+    //         tasksList.addTask(newTask);
+    //       });
+    //       tasksLocalStorage.addItemToExistStorage(task);
+    //       form.reset();
+    //       counter.handleCounters(tasksLocalStorage.getArrayTasks());
+    //     })();
   },
 });
 

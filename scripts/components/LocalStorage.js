@@ -79,11 +79,11 @@ export default class LocalStorage {
           localStorage.setItem(
             this._tasksKey,
             JSON.stringify([
-              ...JSON.parse(localStorage.getItem(this._tasksKey)),
+              ...JSON.parse(localStorage.getItem(this._tasksKey) || "[]"),
               task,
             ])
           );
-          this._addTask();
+          // this._addTask();
         })();
   }
 }
