@@ -105,7 +105,7 @@ function createNewTask(task, navSection) {
     handleCompleteTask: (evt) => {
       evt.target.classList.toggle("todo-list__item-check_checked");
       tasksLocalStorage.toggleCompleteTask(evt);
-      if (navSection !== "all") {
+      if (navBar.getItemWithFocus() !== "all") {
         setTimeout(() => {
           item.removeTaskElement();
         }, 300);
