@@ -23,6 +23,6 @@
 * Работа с памятью браузера LocalStorage.
 
 
-**Ссылка на проект - GitHub Pages**: (https://aumetros.github.io/snp-intern/)
+**Ссылка на проект - GitHub Pages**: (https://aumetros.github.io/snp-todo/)
 
 *апрель 2023г*
