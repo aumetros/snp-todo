@@ -1,0 +1,7 @@
+.todo-navbar__clear {
+  margin-right: 5px;
+}
+
+.todo-navbar__clear:last-of-type {
+  margin-right: 0;
+}

@@ -3,26 +3,39 @@ import Task from "./components/Task.js";
 import Section from "./components/Section.js";
 import LocalStorage from "./components/LocalStorage.js";
 import NavigationBar from "./components/NavigationBar.js";
-// import Counter from "./components/Counter.js";
+import Counter from "./components/Counter.js";
 
 const tasksLocalStorage = new LocalStorage("tasks");
 
+const counter = new Counter(".todo-counters");
+
 const navBar = new NavigationBar(".todo-navbar", {
-  renderActiveTasks: () => {
+  renderActiveTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
     tasksList.loadTasks(false);
   },
-  renderCompleteTasks: () => {
+  renderCompleteTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
     tasksList.loadTasks(true);
   },
-  renderAllTasks: () => {
+  renderAllTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks();
+    tasksList.loadTasks(null);
   },
-  clearTasks: () => {
+  clearCompletedTasks: (evt) => {
+    navBar.handleItemsFocus(evt);
+    tasksLocalStorage.clearCompletedTasks();
+    tasksList.clearTasks();
+    tasksList.loadTasks(false);
+    counter.handleCounters(tasksLocalStorage.getArrayTasks());
+  },
+  clearAllTasks: () => {
     tasksLocalStorage.clearTasks();
     tasksList.clearTasks();
+    counter.handleCounters(tasksLocalStorage.getArrayTasks());
   },
 });
 
@@ -32,15 +45,15 @@ const tasksList = new Section(
       const listItem = createNewTask(task);
       tasksList.addTask(listItem);
     },
-    loadTasks: (taskStatus) => {
+    loadTasks: (taskCompleteStatus) => {
       const tasks = tasksLocalStorage.getArrayTasks();
-      if (taskStatus === undefined) {
+      if (taskCompleteStatus === null) {
         tasks.forEach((task) => {
           tasksList.renderer(task);
         });
       } else {
         tasks.forEach((task) => {
-          if (task.complete === taskStatus) {
+          if (task.complete === taskCompleteStatus) {
             tasksList.renderer(task);
           }
         });
@@ -52,32 +65,42 @@ const tasksList = new Section(
 
 const form = new Form(".todo-form", {
   submitForm: (task) => {
-    tasksLocalStorage.isNull()
-      ? (() => {
-          tasksLocalStorage.addItemToEmptyStorage(task);
-          const newTask = createNewTask(task);
-          tasksList.addTask(newTask);
-          form.reset();
-        })()
-      : (() => {
-          tasksLocalStorage.setHandleAddTask(() => {
-            const newTask = createNewTask(task);
-            tasksList.addTask(newTask);
-          });
-          tasksLocalStorage.addItemToExistStorage(task);
-          form.reset();
-        })();
+    const tasks = tasksLocalStorage.getArrayTasks();
+    if (navBar.getItemWithFocus() === "complete") {
+      if (!tasksLocalStorage.isDublicateTask(task.task, tasks)) {
+        tasksLocalStorage.addItemToStorage(task);
+        form.reset();
+        counter.handleCounters(tasksLocalStorage.getArrayTasks());
+      } else {
+        alert("Такое задание у вас уже есть!");
+      }
+    } else {
+      if (!tasksLocalStorage.isDublicateTask(task.task, tasks)) {
+        tasksLocalStorage.addItemToStorage(task);
+        const newTask = createNewTask(task);
+        tasksList.addTask(newTask);
+        form.reset();
+        counter.handleCounters(tasksLocalStorage.getArrayTasks());
+      } else {
+        alert("Такое задание у вас уже есть!");
+      }
+    }
   },
 });
 
 function createNewTask(task) {
   const item = new Task(task, "#todo-list__item", {
     handleDeleteTask: (textContent) => {
-      item.removeTaskElement();
       tasksLocalStorage.removeTask(textContent);
+      item.removeTaskElement();
+      counter.handleCounters(tasksLocalStorage.getArrayTasks());
     },
     editTask: (textContent, currentTextContent) => {
+      const tasks = tasksLocalStorage.getArrayTasks();
       if (textContent === "") {
+        item._taskText.textContent = currentTextContent;
+      } else if (tasksLocalStorage.isDublicateTask(textContent, tasks)) {
+        alert("Такое задание у вас уже есть!");
         item._taskText.textContent = currentTextContent;
       } else {
         tasksLocalStorage.editTask(textContent, currentTextContent);
@@ -86,6 +109,12 @@ function createNewTask(task) {
     handleCompleteTask: (evt) => {
       evt.target.classList.toggle("todo-list__item-check_checked");
       tasksLocalStorage.toggleCompleteTask(evt);
+      if (navBar.getItemWithFocus() !== "all") {
+        setTimeout(() => {
+          item.removeTaskElement();
+        }, 300);
+      }
+      counter.handleCounters(tasksLocalStorage.getArrayTasks());
     },
   });
   const newItem = item.generateTask();
@@ -96,3 +125,5 @@ tasksList.loadTasks(false);
 
 form.setEventListeners();
 navBar.setEventListeners();
+
+counter.handleCounters(tasksLocalStorage.getArrayTasks());

@@ -13,3 +13,10 @@
 .todo-list__item-btn:last-of-type {
   margin-right: 0;
 }
+
+@media screen and (max-width: 550px) {
+  .todo-list__item-btn {
+    min-width: 20px;
+    min-height: 20px;
+  }
+}

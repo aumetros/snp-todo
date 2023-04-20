@@ -17,17 +17,17 @@ export default class Task {
     return taskElement;
   }
 
-  _confirmEditTask = () => {
-    this._editTask(this._taskText.textContent, this._currentTaskText);
-    this._taskText.contentEditable = false;
-    this._taskText.removeEventListener("blur", this._confirmEditTask);
-  };
-
   _handleCheckTask() {
     if (this._taskComplete) {
       this._check.classList.toggle("todo-list__item-check_checked");
     }   
   }
+  
+  _confirmEditTask = () => {
+    this._editTask(this._taskText.textContent, this._currentTaskText);
+    this._taskText.contentEditable = false;
+    this._taskText.removeEventListener("blur", this._confirmEditTask);
+  };
 
   _handleEditTask() {
     this._currentTaskText = this._taskText.textContent;
@@ -44,7 +44,7 @@ export default class Task {
     );
   }
 
-  removeTaskElement() {
+  removeTaskElement = () => {
     this._taskElement.remove();
   }
 
@@ -54,10 +54,10 @@ export default class Task {
     this._taskText.textContent = this._text;
     this._check = this._taskElement.querySelector(".todo-list__item-check");
     this._editButton = this._taskElement.querySelector(
-      ".todo-list__item_type_edit"
+      ".todo-list__item-btn_type_edit"
     );
     this._deleteButton = this._taskElement.querySelector(
-      ".todo-list__item_type_delete"
+      ".todo-list__item-btn_type_delete"
     );
     this._handleCheckTask();
     this._setEventListeners();

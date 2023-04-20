@@ -1,9 +1,13 @@
 .todo__container {
-  margin: 0 auto;
-  max-width: 900px;
   background-color: #ffffff;
   border-radius: 30px;
   margin-bottom: 10px;
   padding: 40px 40px 20px;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 550px) {
+  .todo__container {
+    padding: 30px 10px 10px;
+  }
 }

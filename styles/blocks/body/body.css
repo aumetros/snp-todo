@@ -1,3 +1,4 @@
 .body {
   background-color: #F9F7F4;
+  overflow-y: scroll;
 }
