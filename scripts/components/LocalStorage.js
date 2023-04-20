@@ -19,7 +19,7 @@ export default class LocalStorage {
         tasks.push(task);
       }
     });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(this._tasksKey, JSON.stringify(tasks));
   }
 
   removeTask(textContent) {
@@ -29,7 +29,7 @@ export default class LocalStorage {
         tasks.splice(tasks.indexOf(task), 1);
       }
     });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(this._tasksKey, JSON.stringify(tasks));
   }
 
   editTask(textContent, currentTextContent) {
@@ -39,7 +39,7 @@ export default class LocalStorage {
         task.task = textContent;
       }
     });
-    localStorage.setItem("tasks", JSON.stringify(this._tasks));
+    localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
   }
 
   toggleCompleteTask(evt) {
