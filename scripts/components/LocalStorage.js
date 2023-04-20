@@ -7,10 +7,6 @@ export default class LocalStorage {
     return Array.from(JSON.parse(localStorage.getItem(this._tasksKey) || "[]"));
   }
 
-  clearTasks() {
-    localStorage.clear();
-  }
-
   clearCompletedTasks() {
     const allTasks = this.getArrayTasks();
     const tasks = [];
@@ -20,6 +16,10 @@ export default class LocalStorage {
       }
     });
     localStorage.setItem(this._tasksKey, JSON.stringify(tasks));
+  }
+
+  clearTasks() {
+    localStorage.clear();
   }
 
   removeTask(textContent) {
