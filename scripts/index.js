@@ -97,7 +97,7 @@ function createNewTask(task) {
     },
     editTask: (textContent, currentTextContent) => {
       const tasks = tasksLocalStorage.getArrayTasks();
-      if (textContent === "") {
+      if (textContent === "" || textContent === currentTextContent) {
         item._taskText.textContent = currentTextContent;
       } else if (tasksLocalStorage.isDublicateTask(textContent, tasks)) {
         alert("Такое задание у вас уже есть!");
