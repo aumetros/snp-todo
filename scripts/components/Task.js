@@ -24,23 +24,23 @@ export default class Task {
   }
   
   _confirmEditTask = () => {
-    this._editTask(this._taskText.textContent, this._currentTaskText);
-    this._taskText.contentEditable = false;
-    this._taskText.removeEventListener("blur", this._confirmEditTask);
+    this._editTask(this.taskText.textContent, this._currentTaskText);
+    this.taskText.contentEditable = false;
+    this.taskText.removeEventListener("blur", this._confirmEditTask);
   };
 
   _handleEditTask() {
-    this._currentTaskText = this._taskText.textContent;
-    this._taskText.contentEditable = true;
-    this._taskText.focus();
-    this._taskText.addEventListener("blur", this._confirmEditTask);
+    this._currentTaskText = this.taskText.textContent;
+    this.taskText.contentEditable = true;
+    this.taskText.focus();
+    this.taskText.addEventListener("blur", this._confirmEditTask);
   }
 
   _setEventListeners() {
     this._check.addEventListener("click", (evt) => this._handleCompleteTask(evt));
     this._editButton.addEventListener("click", () => this._handleEditTask());
     this._deleteButton.addEventListener("click", () =>
-      this._handleDeleteTask(this._taskText.textContent)
+      this._handleDeleteTask(this.taskText.textContent)
     );
   }
 
@@ -50,8 +50,8 @@ export default class Task {
 
   generateTask() {
     this._taskElement = this._getTaskTemplate();
-    this._taskText = this._taskElement.querySelector(".todo-list__item-text");
-    this._taskText.textContent = this._text;
+    this.taskText = this._taskElement.querySelector(".todo-list__item-text");
+    this.taskText.textContent = this._text;
     this._check = this._taskElement.querySelector(".todo-list__item-check");
     this._editButton = this._taskElement.querySelector(
       ".todo-list__item-btn_type_edit"
