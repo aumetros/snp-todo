@@ -8,12 +8,8 @@ export default class LocalStorage {
   }
 
   clearCompletedTasks() {
-    const allTasks = this.getArrayTasks();
-    const tasks = [];
-    allTasks.map((task) => {
-      if (task.complete !== true) {
-        tasks.push(task);
-      }
+    const tasks = this.getArrayTasks().filter((task) => {
+      return task.complete !== true;
     });
     localStorage.setItem(this._tasksKey, JSON.stringify(tasks));
   }
