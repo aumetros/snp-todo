@@ -1,6 +1,6 @@
 .todo-list__item-check {
-  width: 28px;
-  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
   border: 2px solid black;
   box-sizing: border-box;
   position: relative;
@@ -23,8 +23,8 @@
 
 @media screen and (max-width: 550px) {
   .todo-list__item-check {
-    width: 20px;
-    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
   }
 
   .todo-list__item-check::after {
