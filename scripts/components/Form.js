@@ -1,5 +1,5 @@
 export default class Form {
-  constructor(formSelector, { submitForm }) {    
+  constructor(formSelector, { submitForm }) {
     this._todo = document.querySelector(".todo");
     this._form = this._todo.querySelector(formSelector);
     this._input = this._form.querySelector(".todo-form__input");
@@ -17,8 +17,8 @@ export default class Form {
     this._form.reset();
   }
 
-  _handleClick = () => {
-    if (this._input.value !== "") {
+  _handleOuterClick = (evt) => {
+    if (!this._todo.contains(evt.target) && this._input.value !== "") {
       this._submitForm(this._getInputValues());
     }
   };
@@ -29,10 +29,6 @@ export default class Form {
       this._submitForm(this._getInputValues());
     });
 
-    this._todo.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-
-    document.addEventListener("click", this._handleClick);
+    document.addEventListener("click", this._handleOuterClick);
   }
 }
