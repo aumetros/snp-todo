@@ -63,7 +63,7 @@ const tasksList = new Section(
   ".todo-list"
 );
 
-const form = new Form(".todo-form", {
+const form = new Form({
   submitForm: (task) => {
     const tasks = tasksLocalStorage.getArrayTasks();
     if (navBar.getItemWithFocus() === "complete") {

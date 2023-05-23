@@ -1,7 +1,7 @@
 export default class Form {
-  constructor(formSelector, { submitForm }) {
+  constructor({ submitForm }) {
     this._todo = document.querySelector(".todo");
-    this._form = this._todo.querySelector(formSelector);
+    this._form = this._todo.querySelector(".todo-form");
     this._input = this._form.querySelector(".todo-form__input");
     this._submitForm = submitForm;
   }
