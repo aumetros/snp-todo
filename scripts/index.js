@@ -13,29 +13,57 @@ const navBar = new NavigationBar(".todo-navbar", {
   renderActiveTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks(false);
+    tasksList.loadTasks('active');
   },
   renderCompleteTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks(true);
+    tasksList.loadTasks('complete');
   },
   renderAllTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks(null);
+    tasksList.loadTasks("all");
   },
   clearCompletedTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksLocalStorage.clearCompletedTasks();
     tasksList.clearTasks();
-    tasksList.loadTasks(false);
+    tasksList.loadTasks('active');
+    tasksLocalStorage.setFilterToStorage('active');
     counter.handleCounters(tasksLocalStorage.getArrayTasks());
   },
   clearAllTasks: () => {
     tasksLocalStorage.clearTasks();
     tasksList.clearTasks();
     counter.handleCounters(tasksLocalStorage.getArrayTasks());
+  },
+  handleItemsFocus: (evt) => {
+    if (evt.target !== navBar._clearCompletedButton) {
+      navBar._navItems.forEach((item) => {
+        if (item === evt.target) {
+          tasksLocalStorage.setFilterToStorage(item.id);
+          item.classList.add("todo-navbar__item_focus");
+        } else {
+          item.classList.remove("todo-navbar__item_focus");
+        }
+      });
+    } else {
+      navBar._activeTasks.classList.add("todo-navbar__item_focus");
+      navBar._completeTasks.classList.remove("todo-navbar__item_focus");
+      navBar._allTasks.classList.remove("todo-navbar__item_focus");
+    }
+  },
+  setDefaultFocus: (defaultFocus) => {
+    if (defaultFocus) {
+      navBar._navItems.forEach((item) => {
+        if (item.id === defaultFocus) {
+          item.classList.add("todo-navbar__item_focus");
+        } else {
+          item.classList.remove("todo-navbar__item_focus");
+        }
+      });
+    }
   },
 });
 
@@ -47,13 +75,19 @@ const tasksList = new Section(
     },
     loadTasks: (taskCompleteStatus) => {
       const tasks = tasksLocalStorage.getArrayTasks();
-      if (taskCompleteStatus === null) {
+      if (taskCompleteStatus === "all") {
         tasks.forEach((task) => {
           tasksList.renderer(task);
         });
-      } else {
+      } else if (taskCompleteStatus === "active") {
         tasks.forEach((task) => {
-          if (task.complete === taskCompleteStatus) {
+          if (task.complete === false) {
+            tasksList.renderer(task);
+          }
+        });
+      } else if (taskCompleteStatus === "complete") {
+        tasks.forEach((task) => {
+          if (task.complete === true) {
             tasksList.renderer(task);
           }
         });
@@ -121,7 +155,17 @@ function createNewTask(task) {
   return newItem;
 }
 
-tasksList.loadTasks(false);
+function loadTasks() { 
+  const defaultFocus = tasksLocalStorage.getFilterFromStorage()
+  if (defaultFocus) {
+    tasksList.loadTasks(defaultFocus);
+    navBar.setDefaultFocus(defaultFocus);
+  } else {
+    tasksList.loadTasks('active');
+  }
+}
+
+loadTasks();
 
 form.setEventListeners();
 navBar.setEventListeners();
