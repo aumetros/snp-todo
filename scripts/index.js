@@ -39,8 +39,8 @@ const navBar = new NavigationBar(".todo-navbar", {
     counter.handleCounters(tasksLocalStorage.getArrayTasks());
   },
   handleItemsFocus: (evt) => {
-    if (evt.target !== navBar._clearCompletedButton) {
-      navBar._navItems.forEach((item) => {
+    if (evt.target !== navBar.clearCompletedButton) {
+      navBar.navItems.forEach((item) => {
         if (item === evt.target) {
           tasksLocalStorage.setFilterToStorage(item.id);
           item.classList.add("todo-navbar__item_focus");
@@ -49,14 +49,14 @@ const navBar = new NavigationBar(".todo-navbar", {
         }
       });
     } else {
-      navBar._activeTasks.classList.add("todo-navbar__item_focus");
-      navBar._completeTasks.classList.remove("todo-navbar__item_focus");
-      navBar._allTasks.classList.remove("todo-navbar__item_focus");
+      navBar.activeTasks.classList.add("todo-navbar__item_focus");
+      navBar.completeTasks.classList.remove("todo-navbar__item_focus");
+      navBar.allTasks.classList.remove("todo-navbar__item_focus");
     }
   },
   setDefaultFocus: (defaultFocus) => {
     if (defaultFocus) {
-      navBar._navItems.forEach((item) => {
+      navBar.navItems.forEach((item) => {
         if (item.id === defaultFocus) {
           item.classList.add("todo-navbar__item_focus");
         } else {
