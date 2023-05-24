@@ -1,0 +1,13 @@
+.todo-common {
+  display: block;
+  padding: 4px 10px;
+  max-width: fit-content;
+  transform: translate(-11px, 13px);
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.todo-common:hover {
+  background-color: #f4f0e9;
+}

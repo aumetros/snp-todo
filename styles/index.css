@@ -26,6 +26,7 @@
 @import url(./blocks/todo-counters/todo-counters.css);
 @import url(./blocks/todo-counters/__counter/todo-counters__counter.css);
 @import url(./blocks/todo-counters/__text/todo-counters__text.css);
+@import url(./blocks/todo-common/todo-common.css);
 
 @import url(./blocks/todo-list/todo-list.css);
 @import url(./blocks/todo-list/__item/todo-list__item.css);
