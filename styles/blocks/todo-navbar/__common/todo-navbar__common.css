@@ -11,3 +11,15 @@
 .todo-navbar__common:hover {
   background-color: #f4f0e9;
 }
+
+@media screen and (max-width: 550px) {
+  .todo-navbar__common {
+    transform: translate(7px, 22px);
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .todo-navbar__common {
+    font-size: 14px;
+  }
+}
