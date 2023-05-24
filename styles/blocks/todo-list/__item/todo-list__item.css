@@ -9,6 +9,7 @@
   line-height: 28px;
   display: flex;
   justify-content: end;
+  align-items: center;
 }
 
 .todo-list__item:last-of-type {

@@ -26,21 +26,24 @@
             <button class="todo-form__button" type="submit">Добавить</button>
           </form>
           <div class="todo-navbar">
-            <div class="todo-counters">
-              <span id="active"
-                class="todo-counters__text todo-navbar__item todo-navbar__item_focus todo-navbar__item_type_active">Активные:</span>
-              <span class="todo-counters__counter todo-counters__counter_active">0</span>
-              <span id="complete"
-                class="todo-counters__text todo-navbar__item todo-navbar__item_type_complete">Завершенные:</span>
-              <span class="todo-counters__counter todo-counters__counter_complete">0</span>
-              <span id="all" class="todo-counters__text todo-navbar__item todo-navbar__item_type_all">Всего:</span>
-              <span class="todo-counters__counter todo-counters__counter_all">0</span>
+            <div class="todo-navbar__container">
+              <div class="todo-counters">
+                <span id="active"
+                  class="todo-counters__text todo-navbar__item todo-navbar__item_focus todo-navbar__item_type_active">Активные:</span>
+                <span class="todo-counters__counter todo-counters__counter_active">0</span>
+                <span id="complete"
+                  class="todo-counters__text todo-navbar__item todo-navbar__item_type_complete">Завершенные:</span>
+                <span class="todo-counters__counter todo-counters__counter_complete">0</span>
+                <span id="all" class="todo-counters__text todo-navbar__item todo-navbar__item_type_all">Всего:</span>
+                <span class="todo-counters__counter todo-counters__counter_all">0</span>
+              </div>
+              <div class="todo-nabar__clear-list">
+                <span class="todo-navbar__clear todo-navbar__clear_type_text">Очистить:</span>
+                <span class="todo-navbar__clear todo-navbar__clear_type_completed">Завершенные</span>
+                <span class="todo-navbar__clear todo-navbar__clear_type_all">Весь список</span>
+              </div>
             </div>
-            <div>
-              <span class="todo-navbar__clear todo-navbar__clear_type_text">Очистить:</span>
-              <span class="todo-navbar__clear todo-navbar__clear_type_completed">Завершенные</span>
-              <span class="todo-navbar__clear todo-navbar__clear_type_all">Весь список</span>
-            </div>
+            <span class="todo-navbar__common">Отметить все активные дела</span>
           </div>
         </div>
         <ul class="todo-list">
