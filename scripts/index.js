@@ -65,6 +65,12 @@ const navBar = new NavigationBar(".todo-navbar", {
       });
     }
   },
+  checkActiveTasks: () => {
+    tasksLocalStorage.checkAllActiveTasks();
+    tasksList.clearTasks();
+    tasksList.loadTasks(tasksLocalStorage.getFilterFromStorage());
+    counter.handleCounters(tasksLocalStorage.getArrayTasks());
+  }
 });
 
 const tasksList = new Section(

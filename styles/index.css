@@ -18,15 +18,16 @@
 @import url(./blocks/todo-form/__button/todo-form__button.css);
 
 @import url(./blocks/todo-navbar/todo-navbar.css);
+@import url(./blocks/todo-navbar/__container/todo-navbar__container.css);
 @import url(./blocks/todo-navbar/__item/_focus/todo-navbar__item_focus.css);
 @import url(./blocks/todo-navbar/__clear/todo-navbar__clear.css);
 @import url(./blocks/todo-navbar/__clear/_type/todo-navbar__clear_type_completed.css);
 @import url(./blocks/todo-navbar/__clear/_type/todo-navbar__clear_type_all.css);
+@import url(./blocks/todo-navbar/__common/todo-navbar__common.css);
 
 @import url(./blocks/todo-counters/todo-counters.css);
 @import url(./blocks/todo-counters/__counter/todo-counters__counter.css);
 @import url(./blocks/todo-counters/__text/todo-counters__text.css);
-@import url(./blocks/todo-common/todo-common.css);
 
 @import url(./blocks/todo-list/todo-list.css);
 @import url(./blocks/todo-list/__item/todo-list__item.css);

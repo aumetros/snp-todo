@@ -8,11 +8,13 @@ export default class NavigationBar {
       clearCompletedTasks,
       clearAllTasks,
       handleItemsFocus,
-      setDefaultFocus
+      setDefaultFocus,
+      checkActiveTasks
     }
   ) {
     this._navbar = document.querySelector(navbarSelector);
     this.navItems = this._navbar.querySelectorAll(".todo-navbar__item");
+    this._checkAllButton = this._navbar.querySelector(".todo-navbar__common");
     this.activeTasks = this._navbar.querySelector(".todo-navbar__item_type_active");
     this.completeTasks = this._navbar.querySelector(".todo-navbar__item_type_complete");
     this.allTasks = this._navbar.querySelector(".todo-navbar__item_type_all");
@@ -25,6 +27,7 @@ export default class NavigationBar {
     this._clearAllTasks = clearAllTasks;
     this.handleItemsFocus = handleItemsFocus;
     this.setDefaultFocus = setDefaultFocus;
+    this.checkActiveTasks = checkActiveTasks;
   }
 
   getItemWithFocus() {
@@ -41,10 +44,8 @@ export default class NavigationBar {
     this.activeTasks.addEventListener("click", this._renderActiveTasks);
     this.completeTasks.addEventListener("click", this._renderCompleteTasks);
     this.allTasks.addEventListener("click", this._renderAllTasks);
-    this.clearCompletedButton.addEventListener(
-      "click",
-      this._clearCompletedTasks
-    );
+    this.clearCompletedButton.addEventListener("click", this._clearCompletedTasks);
     this._clearAllButton.addEventListener("click", this._clearAllTasks);
+    this._checkAllButton.addEventListener("click", this.checkActiveTasks);
   }
 }

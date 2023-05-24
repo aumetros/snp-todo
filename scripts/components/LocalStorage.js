@@ -65,6 +65,16 @@ export default class LocalStorage {
     );
   }
 
+  checkAllActiveTasks() {
+    this._tasks = this.getArrayTasks();
+    this._tasks.forEach((task) => {
+      if (task.complete === false) {
+        task.complete = true;
+      }
+    });
+    localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
+  }
+
   setFilterToStorage(filter) {
     localStorage.setItem("complete", filter);
   }

@@ -1,4 +1,4 @@
-.todo-common {
+.todo-navbar__common {
   display: block;
   padding: 4px 10px;
   max-width: fit-content;
@@ -8,6 +8,6 @@
   cursor: pointer;
 }
 
-.todo-common:hover {
+.todo-navbar__common:hover {
   background-color: #f4f0e9;
 }
