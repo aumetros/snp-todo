@@ -48,8 +48,9 @@ export default class LocalStorage {
     localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
   }
 
-  isDublicateTask(taskText, tasks) {
-    const dublicate = tasks.some((todo) => {
+  isDublicateTask(taskText) {
+    this._tasks = this.getArrayTasks();
+    const dublicate = this._tasks.some((todo) => {
       return taskText === todo.task;
     });
     return dublicate;
@@ -73,6 +74,32 @@ export default class LocalStorage {
       }
     });
     localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
+  }
+
+  uncheckAllCompleteTasks() {
+    this._tasks = this.getArrayTasks();
+    this._tasks.forEach((task) => {
+      if (task.complete === true) {
+        task.complete = false;
+      }
+    });
+    localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
+  }
+
+  checkIsActiveTasks() {
+    this._tasks = this.getArrayTasks();
+    const activeTasks = this._tasks.some((todo) => {
+      return todo.complete === false;
+    });
+    return activeTasks;
+  }
+
+  checkIsCompleteTasks() {
+    this._tasks = this.getArrayTasks();
+    const completeTasks = this._tasks.some((todo) => {
+      return todo.complete === true;
+    });
+    return completeTasks;
   }
 
   setFilterToStorage(filter) {

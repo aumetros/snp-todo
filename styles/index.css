@@ -23,7 +23,10 @@
 @import url(./blocks/todo-navbar/__clear/todo-navbar__clear.css);
 @import url(./blocks/todo-navbar/__clear/_type/todo-navbar__clear_type_completed.css);
 @import url(./blocks/todo-navbar/__clear/_type/todo-navbar__clear_type_all.css);
+@import url(./blocks/todo-navbar/__common-container/todo-navbar__common-container.css);
 @import url(./blocks/todo-navbar/__common/todo-navbar__common.css);
+@import url(./blocks/todo-navbar/__common/_type/todo-navbar__common_type_check.css);
+@import url(./blocks/todo-navbar/__common/_type/todo-navbar__common_type_disable.css);
 
 @import url(./blocks/todo-counters/todo-counters.css);
 @import url(./blocks/todo-counters/__counter/todo-counters__counter.css);

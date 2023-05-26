@@ -13,12 +13,12 @@ const navBar = new NavigationBar(".todo-navbar", {
   renderActiveTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks('active');
+    tasksList.loadTasks("active");
   },
   renderCompleteTasks: (evt) => {
     navBar.handleItemsFocus(evt);
     tasksList.clearTasks();
-    tasksList.loadTasks('complete');
+    tasksList.loadTasks("complete");
   },
   renderAllTasks: (evt) => {
     navBar.handleItemsFocus(evt);
@@ -29,14 +29,16 @@ const navBar = new NavigationBar(".todo-navbar", {
     navBar.handleItemsFocus(evt);
     ls.clearCompletedTasks();
     tasksList.clearTasks();
-    tasksList.loadTasks('active');
-    ls.setFilterToStorage('active');
+    tasksList.loadTasks("active");
+    ls.setFilterToStorage("active");
     counter.handleCounters(ls.getArrayTasks());
+    navBar.handleCommonButtons();
   },
   clearAllTasks: () => {
     ls.clearTasks();
     tasksList.clearTasks();
     counter.handleCounters(ls.getArrayTasks());
+    navBar.handleCommonButtons();
   },
   handleItemsFocus: (evt) => {
     if (evt.target !== navBar.clearCompletedButton) {
@@ -70,7 +72,31 @@ const navBar = new NavigationBar(".todo-navbar", {
     tasksList.clearTasks();
     tasksList.loadTasks(ls.getFilterFromStorage());
     counter.handleCounters(ls.getArrayTasks());
-  }
+    navBar.handleCommonButtons();
+  },
+  uncheckAllCompleteTasks: () => {
+    ls.uncheckAllCompleteTasks();
+    tasksList.clearTasks();
+    tasksList.loadTasks(ls.getFilterFromStorage());
+    counter.handleCounters(ls.getArrayTasks());
+    navBar.handleCommonButtons();
+  },
+  handleCommonButtons: () => {
+    if (ls.checkIsActiveTasks()) {
+      navBar.checkAllButton.classList.remove(
+        "todo-navbar__common_type_disable"
+      );
+    } else {
+      navBar.checkAllButton.classList.add("todo-navbar__common_type_disable");
+    }
+    if (ls.checkIsCompleteTasks()) {
+      navBar.uncheckAllButton.classList.remove(
+        "todo-navbar__common_type_disable"
+      );
+    } else {
+      navBar.uncheckAllButton.classList.add("todo-navbar__common_type_disable");
+    }
+  },
 });
 
 const tasksList = new Section(
@@ -105,22 +131,23 @@ const tasksList = new Section(
 
 const form = new Form({
   submitForm: (task) => {
-    const tasks = ls.getArrayTasks();
-    if (navBar.getItemWithFocus() === "complete") {
-      if (!ls.isDublicateTask(task.task, tasks)) {
+    if (ls.getFilterFromStorage() === "complete") {
+      if (!ls.isDublicateTask(task.task)) {
         ls.addItemToStorage(task);
         form.reset();
         counter.handleCounters(ls.getArrayTasks());
+        navBar.handleCommonButtons();
       } else {
         alert("Такое задание у вас уже есть!");
       }
     } else {
-      if (!ls.isDublicateTask(task.task, tasks)) {
+      if (!ls.isDublicateTask(task.task)) {
         ls.addItemToStorage(task);
         const newTask = createNewTask(task);
         tasksList.addTask(newTask);
         form.reset();
         counter.handleCounters(ls.getArrayTasks());
+        navBar.handleCommonButtons();
       } else {
         alert("Такое задание у вас уже есть!");
       }
@@ -136,10 +163,9 @@ function createNewTask(task) {
       counter.handleCounters(ls.getArrayTasks());
     },
     editTask: (textContent, currentTextContent) => {
-      const tasks = ls.getArrayTasks();
       if (textContent === "" || textContent === currentTextContent) {
         item.taskText.textContent = currentTextContent;
-      } else if (ls.isDublicateTask(textContent, tasks)) {
+      } else if (ls.isDublicateTask(textContent)) {
         alert("Такое задание у вас уже есть!");
         item.taskText.textContent = currentTextContent;
       } else {
@@ -149,26 +175,28 @@ function createNewTask(task) {
     handleCompleteTask: (evt) => {
       evt.target.classList.toggle("todo-list__item-check_checked");
       ls.toggleCompleteTask(evt);
-      if (navBar.getItemWithFocus() !== "all") {
+      if (ls.getFilterFromStorage() !== "all") {
         setTimeout(() => {
           item.removeTaskElement();
         }, 300);
       }
       counter.handleCounters(ls.getArrayTasks());
+      navBar.handleCommonButtons();
     },
   });
   const newItem = item.generateTask();
   return newItem;
 }
 
-function loadTasks() { 
-  const defaultFocus = ls.getFilterFromStorage()
+function loadTasks() {
+  const defaultFocus = ls.getFilterFromStorage();
   if (defaultFocus) {
     tasksList.loadTasks(defaultFocus);
     navBar.setDefaultFocus(defaultFocus);
   } else {
-    tasksList.loadTasks('active');
+    tasksList.loadTasks("active");
   }
+  navBar.handleCommonButtons();
 }
 
 loadTasks();

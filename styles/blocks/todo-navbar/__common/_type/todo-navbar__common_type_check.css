@@ -1,0 +1,17 @@
+.todo-navbar__common_type_check {
+  margin-right: 20px;
+}
+
+.todo-navbar__common_type_check::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 9px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
