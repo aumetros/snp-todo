@@ -11,7 +11,7 @@ export default class NavigationBar {
       setDefaultFocus,
       checkActiveTasks,
       uncheckAllCompleteTasks,
-      handleCommonButtons
+      handleCommonButtons,
     }
   ) {
     this._navbar = document.querySelector(navbarSelector);

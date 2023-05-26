@@ -83,12 +83,16 @@ const navBar = new NavigationBar(".todo-navbar", {
   },
   handleCommonButtons: () => {
     if (ls.checkIsActiveTasks()) {
-      navBar.checkAllButton.classList.remove("todo-navbar__common_type_disable");
+      navBar.checkAllButton.classList.remove(
+        "todo-navbar__common_type_disable"
+      );
     } else {
       navBar.checkAllButton.classList.add("todo-navbar__common_type_disable");
     }
     if (ls.checkIsCompleteTasks()) {
-      navBar.uncheckAllButton.classList.remove("todo-navbar__common_type_disable");
+      navBar.uncheckAllButton.classList.remove(
+        "todo-navbar__common_type_disable"
+      );
     } else {
       navBar.uncheckAllButton.classList.add("todo-navbar__common_type_disable");
     }
