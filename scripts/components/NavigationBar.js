@@ -9,12 +9,15 @@ export default class NavigationBar {
       clearAllTasks,
       handleItemsFocus,
       setDefaultFocus,
-      checkActiveTasks
+      checkActiveTasks,
+      uncheckAllCompleteTasks,
+      handleCommonButtons
     }
   ) {
     this._navbar = document.querySelector(navbarSelector);
     this.navItems = this._navbar.querySelectorAll(".todo-navbar__item");
-    this._checkAllButton = this._navbar.querySelector(".todo-navbar__common");
+    this.checkAllButton = this._navbar.querySelector(".todo-navbar__common_type_check");
+    this.uncheckAllButton = this._navbar.querySelector(".todo-navbar__common_type_uncheck");
     this.activeTasks = this._navbar.querySelector(".todo-navbar__item_type_active");
     this.completeTasks = this._navbar.querySelector(".todo-navbar__item_type_complete");
     this.allTasks = this._navbar.querySelector(".todo-navbar__item_type_all");
@@ -28,16 +31,8 @@ export default class NavigationBar {
     this.handleItemsFocus = handleItemsFocus;
     this.setDefaultFocus = setDefaultFocus;
     this.checkActiveTasks = checkActiveTasks;
-  }
-
-  getItemWithFocus() {
-    this.navItems = this._navbar.querySelectorAll(".todo-navbar__item");
-    this.navItems.forEach((item) => {
-      if (item.classList.contains("todo-navbar__item_focus")) {
-        this._currentItemId = item.id;
-      }
-    });
-    return this._currentItemId;
+    this.uncheckAllCompleteTasks = uncheckAllCompleteTasks;
+    this.handleCommonButtons = handleCommonButtons;
   }
 
   setEventListeners() {
@@ -46,6 +41,7 @@ export default class NavigationBar {
     this.allTasks.addEventListener("click", this._renderAllTasks);
     this.clearCompletedButton.addEventListener("click", this._clearCompletedTasks);
     this._clearAllButton.addEventListener("click", this._clearAllTasks);
-    this._checkAllButton.addEventListener("click", this.checkActiveTasks);
+    this.checkAllButton.addEventListener("click", this.checkActiveTasks);
+    this.uncheckAllButton.addEventListener("click", this.uncheckAllCompleteTasks);
   }
 }

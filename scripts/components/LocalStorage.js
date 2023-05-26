@@ -75,6 +75,32 @@ export default class LocalStorage {
     localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
   }
 
+  uncheckAllCompleteTasks() {
+    this._tasks = this.getArrayTasks();
+    this._tasks.forEach((task) => {
+      if (task.complete === true) {
+        task.complete = false;
+      }
+    });
+    localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
+  }
+
+  checkIsActiveTasks() {
+    this._tasks = this.getArrayTasks();
+    const activeTasks = this._tasks.some((todo) => {
+      return todo.complete === false;
+    });
+    return activeTasks;
+  }
+
+  checkIsCompleteTasks() {
+    this._tasks = this.getArrayTasks();
+    const completeTasks = this._tasks.some((todo) => {
+      return todo.complete === true;
+    });
+    return completeTasks;
+  }
+
   setFilterToStorage(filter) {
     localStorage.setItem("complete", filter);
   }
