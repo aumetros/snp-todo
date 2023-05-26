@@ -48,8 +48,9 @@ export default class LocalStorage {
     localStorage.setItem(this._tasksKey, JSON.stringify(this._tasks));
   }
 
-  isDublicateTask(taskText, tasks) {
-    const dublicate = tasks.some((todo) => {
+  isDublicateTask(taskText) {
+    this._tasks = this.getArrayTasks();
+    const dublicate = this._tasks.some((todo) => {
       return taskText === todo.task;
     });
     return dublicate;

@@ -127,9 +127,8 @@ const tasksList = new Section(
 
 const form = new Form({
   submitForm: (task) => {
-    const tasks = ls.getArrayTasks();
     if (ls.getFilterFromStorage() === "complete") {
-      if (!ls.isDublicateTask(task.task, tasks)) {
+      if (!ls.isDublicateTask(task.task)) {
         ls.addItemToStorage(task);
         form.reset();
         counter.handleCounters(ls.getArrayTasks());
@@ -138,7 +137,7 @@ const form = new Form({
         alert("Такое задание у вас уже есть!");
       }
     } else {
-      if (!ls.isDublicateTask(task.task, tasks)) {
+      if (!ls.isDublicateTask(task.task)) {
         ls.addItemToStorage(task);
         const newTask = createNewTask(task);
         tasksList.addTask(newTask);
@@ -160,10 +159,9 @@ function createNewTask(task) {
       counter.handleCounters(ls.getArrayTasks());
     },
     editTask: (textContent, currentTextContent) => {
-      const tasks = ls.getArrayTasks();
       if (textContent === "" || textContent === currentTextContent) {
         item.taskText.textContent = currentTextContent;
-      } else if (ls.isDublicateTask(textContent, tasks)) {
+      } else if (ls.isDublicateTask(textContent)) {
         alert("Такое задание у вас уже есть!");
         item.taskText.textContent = currentTextContent;
       } else {
