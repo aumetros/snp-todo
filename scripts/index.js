@@ -4,6 +4,10 @@ const inputAddTask = formAddTask.querySelector(".todo-form__input");
 const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
+let tasks;
+
+localStorage.tasks ? (tasks = JSON.parse(localStorage.getItem("tasks"))) : (tasks = []);
+
 function getInputValue() {
   const task = {};
   task.task = inputAddTask.value;
@@ -48,9 +52,9 @@ function submitAddTaskForm(task) {
   // }
 }
 
-function getArrayTasks() {
-  return Array.from(JSON.parse(localStorage.getItem("tasks") || "[]"));
-}
+// function getArrayTasks() {
+//   return Array.from(JSON.parse(localStorage.getItem("tasks") || "[]"));
+// }
 
 function addItemToStorage(task) {
   localStorage.setItem("tasks", JSON.stringify([...JSON.parse(localStorage.getItem("tasks") || "[]"), task]));
@@ -61,8 +65,6 @@ function getFilterFromStorage() {
 }
 
 function loadTasks (taskCompleteStatus) {
-  const tasks = getArrayTasks();
-  console.log(tasks);
   // if (taskCompleteStatus === "all") {
     tasks.forEach((task) => {
       renderTask(task);
