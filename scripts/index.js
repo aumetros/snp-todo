@@ -1,9 +1,7 @@
 const app = document.querySelector(".todo");
 const formAddTask = app.querySelector(".todo-form");
 const inputAddTask = formAddTask.querySelector(".todo-form__input");
-const taskTemplate = document
-  .querySelector("#todo-list__item")
-  .content.querySelector(".todo-list__item");
+const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
 function getInputValue() {
@@ -22,6 +20,11 @@ function createNewTask(task) {
   return newTask;
 }
 
+function renderTask(task) { 
+  const newTask = createNewTask(task);
+  todoList.append(newTask);
+}
+
 function submitAddTaskForm(task) {
   // if (ls.getFilterFromStorage() === "complete") {
   //   if (!ls.isDublicateTask(task.task)) {
@@ -34,9 +37,8 @@ function submitAddTaskForm(task) {
   //   }
   // } else {
   //   if (!ls.isDublicateTask(task.task)) {
-  //     ls.addItemToStorage(task);
-  const newTask = createNewTask(task);
-  todoList.append(newTask);
+  addItemToStorage(task);
+  renderTask(task);
   formAddTask.reset();
   // counter.handleCounters(ls.getArrayTasks());
   // navBar.handleCommonButtons();
@@ -46,7 +48,48 @@ function submitAddTaskForm(task) {
   // }
 }
 
+function getArrayTasks() {
+  return Array.from(JSON.parse(localStorage.getItem("tasks") || "[]"));
+}
+
+function addItemToStorage(task) {
+  localStorage.setItem("tasks", JSON.stringify([...JSON.parse(localStorage.getItem("tasks") || "[]"), task]));
+}
+
+function getFilterFromStorage() {
+  return localStorage.getItem("complete");
+}
+
+function loadTasks (taskCompleteStatus) {
+  const tasks = getArrayTasks();
+  console.log(tasks);
+  // if (taskCompleteStatus === "all") {
+    tasks.forEach((task) => {
+      renderTask(task);
+    });
+  // } else if (taskCompleteStatus === "active") {
+  //   tasks.forEach((task) => {
+  //     if (task.complete === false) {
+  //       renderTask(task);
+  //     }
+  //   });
+  // } else if (taskCompleteStatus === "complete") {
+  //   tasks.forEach((task) => {
+  //     if (task.complete === true) {
+  //       renderTask(task);
+  //     }
+  //   });
+  // }
+}
+
+// function loadInitialTasks() {
+//   const initialTasks = 
+// }
+
 formAddTask.addEventListener("submit", (e) => {
   e.preventDefault();
   submitAddTaskForm(getInputValue());
 });
+
+
+loadTasks();
