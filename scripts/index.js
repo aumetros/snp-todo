@@ -8,6 +8,31 @@ let tasks;
 
 localStorage.tasks ? (tasks = JSON.parse(localStorage.getItem("tasks"))) : (tasks = []);
 
+function updateLocalStorage() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function addItemToTasks(task) {
+  tasks = [...tasks, task];
+  updateLocalStorage();
+}
+
+function deleteItemFromTasks(textContent) {
+  tasks.forEach((task) => {
+    if (task.task === textContent) {
+      tasks.splice(tasks.indexOf(task), 1);
+    }
+  });
+  updateLocalStorage();
+}
+
+function deleteTask(e) {
+  const currentTask = e.target.closest('.todo-list__item');
+  const currentTaskText = currentTask.querySelector('.todo-list__item-text').textContent;
+  deleteItemFromTasks(currentTaskText);
+  currentTask.remove();
+}
+
 function getInputValue() {
   const task = {};
   task.task = inputAddTask.value;
@@ -21,6 +46,7 @@ function createNewTask(task) {
   const taskCheck = newTask.querySelector(".todo-list__item-check");
   const taskEdit = newTask.querySelector(".todo-list__item-btn_type_edit");
   const taskDelete = newTask.querySelector(".todo-list__item-btn_type_delete");
+  taskDelete.addEventListener('click', deleteTask);
   return newTask;
 }
 
@@ -41,7 +67,7 @@ function submitAddTaskForm(task) {
   //   }
   // } else {
   //   if (!ls.isDublicateTask(task.task)) {
-  addItemToStorage(task);
+  addItemToTasks(task);
   renderTask(task);
   formAddTask.reset();
   // counter.handleCounters(ls.getArrayTasks());
@@ -56,9 +82,7 @@ function submitAddTaskForm(task) {
 //   return Array.from(JSON.parse(localStorage.getItem("tasks") || "[]"));
 // }
 
-function addItemToStorage(task) {
-  localStorage.setItem("tasks", JSON.stringify([...JSON.parse(localStorage.getItem("tasks") || "[]"), task]));
-}
+
 
 function getFilterFromStorage() {
   return localStorage.getItem("complete");
