@@ -1,12 +1,16 @@
 const app = document.querySelector(".todo");
 const formAddTask = app.querySelector(".todo-form");
 const inputAddTask = formAddTask.querySelector(".todo-form__input");
-const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
+const taskTemplate = document
+  .querySelector("#todo-list__item")
+  .content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
 let tasks;
 
-localStorage.tasks ? (tasks = JSON.parse(localStorage.getItem("tasks"))) : (tasks = []);
+localStorage.tasks
+  ? (tasks = JSON.parse(localStorage.getItem("tasks")))
+  : (tasks = []);
 
 function updateLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -26,11 +30,34 @@ function deleteItemFromTasks(textContent) {
   updateLocalStorage();
 }
 
-function deleteTask(e) {
-  const currentTask = e.target.closest('.todo-list__item');
-  const currentTaskText = currentTask.querySelector('.todo-list__item-text').textContent;
+function handleDeleteTask(e) {
+  const currentTask = e.target.closest(".todo-list__item");
+  const currentTaskText = currentTask.querySelector(
+    ".todo-list__item-text"
+  ).textContent;
   deleteItemFromTasks(currentTaskText);
   currentTask.remove();
+}
+
+function toggleCompleteTask(e) {
+  tasks.forEach((task) => {
+    if (task.task === e.target.nextElementSibling.textContent) {
+      task.complete = !task.complete;
+    }
+  });
+  updateLocalStorage();
+}
+
+function handleCompleteTask(e) {
+  e.target.classList.toggle("todo-list__item-check_checked");
+  toggleCompleteTask(e);
+  // if (ls.getFilterFromStorage() !== "all") {
+  //   setTimeout(() => {
+  //     item.removeTaskElement();
+  //   }, 300);
+  // }
+  // counter.handleCounters(ls.getArrayTasks());
+  // navBar.handleCommonButtons();
 }
 
 function getInputValue() {
@@ -40,17 +67,25 @@ function getInputValue() {
   return task;
 }
 
+function handleCheckTask(task, newTask) {
+  if (task.complete) {
+    newTask.classList.toggle("todo-list__item-check_checked");
+  }   
+}
+
 function createNewTask(task) {
   const newTask = taskTemplate.cloneNode(true);
   newTask.querySelector(".todo-list__item-text").textContent = task.task;
   const taskCheck = newTask.querySelector(".todo-list__item-check");
   const taskEdit = newTask.querySelector(".todo-list__item-btn_type_edit");
   const taskDelete = newTask.querySelector(".todo-list__item-btn_type_delete");
-  taskDelete.addEventListener('click', deleteTask);
+  task.complete ? (taskCheck.classList.toggle("todo-list__item-check_checked")) : null;
+  taskCheck.addEventListener("click", handleCompleteTask);
+  taskDelete.addEventListener("click", handleDeleteTask);
   return newTask;
 }
 
-function renderTask(task) { 
+function renderTask(task) {
   const newTask = createNewTask(task);
   todoList.append(newTask);
 }
@@ -82,17 +117,15 @@ function submitAddTaskForm(task) {
 //   return Array.from(JSON.parse(localStorage.getItem("tasks") || "[]"));
 // }
 
-
-
 function getFilterFromStorage() {
   return localStorage.getItem("complete");
 }
 
-function loadTasks (taskCompleteStatus) {
+function loadTasks(taskCompleteStatus) {
   // if (taskCompleteStatus === "all") {
-    tasks.forEach((task) => {
-      renderTask(task);
-    });
+  tasks.forEach((task) => {
+    renderTask(task);
+  });
   // } else if (taskCompleteStatus === "active") {
   //   tasks.forEach((task) => {
   //     if (task.complete === false) {
@@ -109,13 +142,12 @@ function loadTasks (taskCompleteStatus) {
 }
 
 // function loadInitialTasks() {
-//   const initialTasks = 
+//   const initialTasks =
 // }
 
 formAddTask.addEventListener("submit", (e) => {
   e.preventDefault();
   submitAddTaskForm(getInputValue());
 });
-
 
 loadTasks();
