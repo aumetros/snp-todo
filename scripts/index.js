@@ -1,24 +1,24 @@
 const app = document.querySelector(".todo");
 const formAddTask = app.querySelector(".todo-form");
 const inputAddTask = formAddTask.querySelector(".todo-form__input");
-const taskTemplate = document
-  .querySelector("#todo-list__item")
-  .content.querySelector(".todo-list__item");
+const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
 /**Элементы навигации */
 const navBar = app.querySelector(".todo-navbar");
 const navButtons = navBar.querySelectorAll(".todo-navbar__item");
-const buttonClearComplete = navBar.querySelector(".todo-navbar__clear_type_completed");
-const buttonClearAll = navBar.querySelector(".todo-navbar__clear_type_all");
+
 const counter = navBar.querySelector(".todo-counters");
 const counterActive = counter.querySelector(".todo-counters__counter_active");
 const counterComplete = counter.querySelector(".todo-counters__counter_complete");
 const counterAll = counter.querySelector(".todo-counters__counter_all");
 
+const buttonClearComplete = navBar.querySelector(".todo-navbar__clear_type_completed");
+const buttonClearAll = navBar.querySelector(".todo-navbar__clear_type_all");
 
-const buttonCheckAll = navBar.querySelector('.todo-navbar__common_type_check');
-const buttonUncheckAll = navBar.querySelector('.todo-navbar__common_type_uncheck');
+const buttonCheckAll = navBar.querySelector(".todo-navbar__common_type_check");
+const buttonUncheckAll = navBar.querySelector(".todo-navbar__common_type_uncheck");
+
 /**Переменные для хранения временных значений */
 let tasks;
 let filterStatus;
@@ -66,12 +66,12 @@ function deleteItemFromTasks(textContent) {
 }
 
 function checkAllActiveTasks() {
-  tasks.forEach((task) => task.complete = true);
+  tasks.forEach((task) => (task.complete = true));
   updateTasksLocalStorage();
 }
 
 function uncheckAllCompleteTasks() {
-  tasks.forEach((task) => task.complete = false);
+  tasks.forEach((task) => (task.complete = false));
   updateTasksLocalStorage();
 }
 
@@ -87,15 +87,6 @@ function clearAllTasks() {
   updateTasksLocalStorage();
 }
 
-/**Обработчики функционала элемента задачи*/
-function handleDeleteTask(e) {
-  const currentTask = e.target.closest(".todo-list__item");
-  const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
-  deleteItemFromTasks(currentTaskText);
-  currentTask.remove();
-  handleCounters();
-}
-
 function toggleCompleteInTasks(e) {
   tasks.forEach((task) => {
     if (task.task === e.target.nextElementSibling.textContent) {
@@ -105,9 +96,29 @@ function toggleCompleteInTasks(e) {
   updateTasksLocalStorage();
 }
 
+/**Проверка на полностью выполненные или активные задачи */
+function isAllTasksActive() {
+  const activeTasks = tasks.some((todo) => todo.complete === false);
+  return activeTasks;
+}
+
+function isAllTasksComplete() {
+  const completeTasks = tasks.some((todo) => todo.complete === true);
+  return completeTasks;
+}
+
+/**Обработчики функционала элемента задачи*/
+function handleDeleteTask(e) {
+  const currentTask = e.target.closest(".todo-list__item");
+  const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
+  deleteItemFromTasks(currentTaskText);
+  currentTask.remove();
+  handleCounters();
+}
+
 function handleCompleteTask(e) {
   currentTask = e.target.closest(".todo-list__item");
-  e.target.classList.toggle("todo-list__item-check_checked");  
+  e.target.classList.toggle("todo-list__item-check_checked");
   toggleCompleteInTasks(e);
   if (filterStatus !== "all") {
     setTimeout(() => {
@@ -115,7 +126,7 @@ function handleCompleteTask(e) {
     }, 300);
   }
   handleCounters();
-  // navBar.handleCommonButtons();
+  handleCommonButtons();
 }
 
 function isDublicateTask(taskText) {
@@ -153,12 +164,6 @@ function handleEditTask(e) {
   currentTask.addEventListener("blur", confirmEditTask);
 }
 
-function handleCheckTask(task, newTask) {
-  if (task.complete) {
-    newTask.classList.toggle("todo-list__item-check_checked");
-  }
-}
-
 /**Создание новой задачи */
 function createNewTask(task) {
   const newTask = taskTemplate.cloneNode(true);
@@ -185,20 +190,20 @@ function getInputValue() {
 function submitAddTaskForm(task) {
   if (filterStatus === "complete") {
     if (!isDublicateTask(task.task)) {
-      addItemToTasks(task);      
+      addItemToTasks(task);
       handleCounters();
-      // navBar.handleCommonButtons();
+      handleCommonButtons();
       formAddTask.reset();
     } else {
       alert("Такое задание у вас уже есть!");
     }
   } else {
     if (!isDublicateTask(task.task)) {
-  addItemToTasks(task);
-  renderTask(task); 
-  handleCounters();
-  // navBar.handleCommonButtons();
-  formAddTask.reset();
+      addItemToTasks(task);
+      renderTask(task);
+      handleCounters();
+      handleCommonButtons();
+      formAddTask.reset();
     } else {
       alert("Такое задание у вас уже есть!");
     }
@@ -242,24 +247,20 @@ function handleCounters() {
   counterAll.textContent = tasks.length;
 }
 
-//**Слушатели событий */
-formAddTask.addEventListener("submit", (e) => {
-  e.preventDefault();
-  submitAddTaskForm(getInputValue());
-});
-
+/**Обработчики событий со всем списком задач */
 function handleClearCompleteTasks() {
   clearCompleteTasks();
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
-  // navBar.handleCommonButtons();
+  handleCommonButtons();
 }
 
 function handleClearAllTasks() {
   clearAllTasks();
   clearTaskList();
   handleCounters();
+  handleCommonButtons();
 }
 
 function handleCheckAllTasks() {
@@ -267,7 +268,7 @@ function handleCheckAllTasks() {
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
-  // navBar.handleCommonButtons();
+  handleCommonButtons();
 }
 
 function handleUncheckAllTasks() {
@@ -275,14 +276,10 @@ function handleUncheckAllTasks() {
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
+  handleCommonButtons();
 }
 
-buttonCheckAll.addEventListener('click', handleCheckAllTasks);
-buttonUncheckAll.addEventListener('click', handleUncheckAllTasks);
-
-buttonClearComplete.addEventListener('click', handleClearCompleteTasks);
-buttonClearAll.addEventListener('click', handleClearAllTasks);
-
+/**Обработчик фокуса на элементах фильтра */
 function handleItemsFocus(e) {
   navButtons.forEach((button) => {
     if (button === e.target) {
@@ -295,6 +292,30 @@ function handleItemsFocus(e) {
   });
 }
 
+/**Обработчик состояния кнопок общей установки или снятия отметки */
+function handleCommonButtons() {
+  isAllTasksActive()
+    ? buttonCheckAll.classList.remove("todo-navbar__common_type_disable")
+    : buttonCheckAll.classList.add("todo-navbar__common_type_disable");
+
+  isAllTasksComplete()
+    ? buttonUncheckAll.classList.remove("todo-navbar__common_type_disable")
+    : buttonUncheckAll.classList.add("todo-navbar__common_type_disable");
+}
+
+//**Слушатели событий */
+formAddTask.addEventListener("submit", (e) => {
+  e.preventDefault();
+  submitAddTaskForm(getInputValue());
+});
+
+buttonCheckAll.addEventListener("click", handleCheckAllTasks);
+buttonUncheckAll.addEventListener("click", handleUncheckAllTasks);
+
+buttonClearComplete.addEventListener("click", handleClearCompleteTasks);
+buttonClearAll.addEventListener("click", handleClearAllTasks);
+
+/**Уствновка слушателей на элементах фильтра */
 navButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     clearTaskList();
@@ -306,5 +327,7 @@ navButtons.forEach((button) => {
     : button.classList.remove("todo-navbar__item_focus");
 });
 
+/**Установка состояния при инициализации приложения */
+handleCommonButtons();
 handleCounters();
 loadTasks(filterStatus);
