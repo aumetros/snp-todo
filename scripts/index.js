@@ -110,7 +110,9 @@ function isAllTasksComplete() {
 /**Обработчики функционала элемента задачи*/
 function handleDeleteTask(e) {
   const currentTask = e.target.closest(".todo-list__item");
-  const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
+  const currentTaskText = currentTask.querySelector(
+    ".todo-list__item-text"
+  ).textContent;
   deleteItemFromTasks(currentTaskText);
   currentTask.remove();
   handleCounters();
@@ -156,12 +158,23 @@ function confirmEditTask() {
   currentTask.removeEventListener("blur", confirmEditTask);
 }
 
+function handleEnterPress(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    currentTask.removeEventListener("blur", confirmEditTask);
+    editTask();
+    currentTask.contentEditable = false;
+    currentTask.removeEventListener("keypress", handleEnterPress);
+  }
+}
+
 function handleEditTask(e) {
   currentTask = e.target.previousElementSibling;
   prevTaskText = currentTask.textContent;
   currentTask.contentEditable = true;
   currentTask.focus();
   currentTask.addEventListener("blur", confirmEditTask);
+  currentTask.addEventListener("keypress", handleEnterPress);
 }
 
 /**Создание новой задачи */
