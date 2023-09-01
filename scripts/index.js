@@ -46,7 +46,6 @@ function updateFilterLocalStorage() {
 function addItemToTasks(task) {
   tasks = [...tasks, task];
   updateTasksLocalStorage();
-  handleCounters();
 }
 
 function editTaskInStorage(textContent, currentTextContent) {
@@ -164,26 +163,26 @@ function getInputValue() {
 }
 
 function submitAddTaskForm(task) {
-  // if (ls.getFilterFromStorage() === "complete") {
-  //   if (!ls.isDublicateTask(task.task)) {
-  //     ls.addItemToStorage(task);
-  //     form.reset();
-  //     counter.handleCounters(ls.getArrayTasks());
-  //     navBar.handleCommonButtons();
-  //   } else {
-  //     alert("Такое задание у вас уже есть!");
-  //   }
-  // } else {
-  //   if (!ls.isDublicateTask(task.task)) {
+  if (filterStatus === "complete") {
+    if (!isDublicateTask(task.task)) {
+      addItemToTasks(task);      
+      handleCounters();
+      // navBar.handleCommonButtons();
+      formAddTask.reset();
+    } else {
+      alert("Такое задание у вас уже есть!");
+    }
+  } else {
+    if (!isDublicateTask(task.task)) {
   addItemToTasks(task);
-  renderTask(task);
-  formAddTask.reset();
+  renderTask(task); 
   handleCounters();
   // navBar.handleCommonButtons();
-  //   } else {
-  //     alert("Такое задание у вас уже есть!");
-  //   }
-  // }
+  formAddTask.reset();
+    } else {
+      alert("Такое задание у вас уже есть!");
+    }
+  }
 }
 
 /**Рендер списка задач*/
