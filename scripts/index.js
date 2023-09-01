@@ -70,9 +70,7 @@ function deleteItemFromTasks(textContent) {
 /**Обработчики функционала элемента задачи*/
 function handleDeleteTask(e) {
   const currentTask = e.target.closest(".todo-list__item");
-  const currentTaskText = currentTask.querySelector(
-    ".todo-list__item-text"
-  ).textContent;
+  const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
   deleteItemFromTasks(currentTaskText);
   currentTask.remove();
 }
@@ -87,13 +85,14 @@ function toggleCompleteInTasks(e) {
 }
 
 function handleCompleteTask(e) {
-  e.target.classList.toggle("todo-list__item-check_checked");
+  currentTask = e.target.closest(".todo-list__item");
+  e.target.classList.toggle("todo-list__item-check_checked");  
   toggleCompleteInTasks(e);
-  // if (ls.getFilterFromStorage() !== "all") {
-  //   setTimeout(() => {
-  //     item.removeTaskElement();
-  //   }, 300);
-  // }
+  if (filterStatus !== "all") {
+    setTimeout(() => {
+      currentTask.remove();
+    }, 300);
+  }
   handleCounters();
   // navBar.handleCommonButtons();
 }
