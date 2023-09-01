@@ -1,16 +1,24 @@
 const app = document.querySelector(".todo");
 const formAddTask = app.querySelector(".todo-form");
 const inputAddTask = formAddTask.querySelector(".todo-form__input");
-const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
+const taskTemplate = document
+  .querySelector("#todo-list__item")
+  .content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
 /**Элементы навигации */
-const navBar = app.querySelector('.todo-navbar');
-const navButtons = navBar.querySelectorAll('.todo-navbar__item');
-const counter = navBar.querySelector('.todo-counters');
-const coounterActive = counter.querySelector('.todo-counters__counter_active');
-const counterComplete = counter.querySelector('.todo-counters__counter_complete');
-const counterAll = counter.querySelector('.todo-counters__counter_all');
+const navBar = app.querySelector(".todo-navbar");
+const navButtons = navBar.querySelectorAll(".todo-navbar__item");
+const buttonClearComplete = navBar.querySelector(
+  ".todo-navbar__clear_type_completed"
+);
+const buttonClearAll = navBar.querySelector(".todo-navbar__clear_type_all");
+const counter = navBar.querySelector(".todo-counters");
+const coounterActive = counter.querySelector(".todo-counters__counter_active");
+const counterComplete = counter.querySelector(
+  ".todo-counters__counter_complete"
+);
+const counterAll = counter.querySelector(".todo-counters__counter_all");
 
 /**Переменные для хранения временных значений */
 let tasks;
@@ -23,15 +31,21 @@ localStorage.tasks
   ? (tasks = JSON.parse(localStorage.getItem("tasks")))
   : (tasks = []);
 
-localStorage.filter ? (filterStatus = JSON.parse(localStorage.getItem("tasks"))) : (filterStatus = "active");
+localStorage.filter
+  ? (filterStatus = JSON.parse(localStorage.getItem("filter")))
+  : (filterStatus = "active");
 
-function updateLocalStorage() {
+function updateTasksLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function updateFilterLocalStorage() {
+  localStorage.setItem("filter", JSON.stringify(filterStatus));
 }
 
 function addItemToTasks(task) {
   tasks = [...tasks, task];
-  updateLocalStorage();
+  updateTasksLocalStorage();
   handleCounters();
 }
 
@@ -41,7 +55,7 @@ function editTaskInStorage(textContent, currentTextContent) {
       task.task = textContent;
     }
   });
-  updateLocalStorage();
+  updateTasksLocalStorage();
 }
 
 function deleteItemFromTasks(textContent) {
@@ -50,14 +64,16 @@ function deleteItemFromTasks(textContent) {
       tasks.splice(tasks.indexOf(task), 1);
     }
   });
-  updateLocalStorage();
+  updateTasksLocalStorage();
   handleCounters();
 }
 
 /**Обработчики функционала элемента задачи*/
 function handleDeleteTask(e) {
   const currentTask = e.target.closest(".todo-list__item");
-  const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
+  const currentTaskText = currentTask.querySelector(
+    ".todo-list__item-text"
+  ).textContent;
   deleteItemFromTasks(currentTaskText);
   currentTask.remove();
 }
@@ -68,7 +84,7 @@ function toggleCompleteInTasks(e) {
       task.complete = !task.complete;
     }
   });
-  updateLocalStorage();
+  updateTasksLocalStorage();
 }
 
 function handleCompleteTask(e) {
@@ -90,8 +106,11 @@ function isDublicateTask(taskText) {
   return dublicate;
 }
 
-function editTask () {
-  if (currentTask.textContent === "" || currentTask.textContent === prevTaskText) {
+function editTask() {
+  if (
+    currentTask.textContent === "" ||
+    currentTask.textContent === prevTaskText
+  ) {
     currentTask.textContent = prevTaskText;
   } else if (isDublicateTask(currentTask.textContent)) {
     alert("Такое задание у вас уже есть!");
@@ -102,9 +121,9 @@ function editTask () {
 }
 
 function confirmEditTask() {
-    editTask();
-    currentTask.contentEditable = false;
-    currentTask.removeEventListener("blur", confirmEditTask);
+  editTask();
+  currentTask.contentEditable = false;
+  currentTask.removeEventListener("blur", confirmEditTask);
 }
 
 function handleEditTask(e) {
@@ -118,7 +137,7 @@ function handleEditTask(e) {
 function handleCheckTask(task, newTask) {
   if (task.complete) {
     newTask.classList.toggle("todo-list__item-check_checked");
-  }   
+  }
 }
 
 /**Создание новой задачи */
@@ -128,7 +147,9 @@ function createNewTask(task) {
   const taskCheck = newTask.querySelector(".todo-list__item-check");
   const taskEdit = newTask.querySelector(".todo-list__item-btn_type_edit");
   const taskDelete = newTask.querySelector(".todo-list__item-btn_type_delete");
-  task.complete ? (taskCheck.classList.toggle("todo-list__item-check_checked")) : null;
+  task.complete
+    ? taskCheck.classList.toggle("todo-list__item-check_checked")
+    : null;
   taskCheck.addEventListener("click", handleCompleteTask);
   taskEdit.addEventListener("click", handleEditTask);
   taskDelete.addEventListener("click", handleDeleteTask);
@@ -177,9 +198,9 @@ function clearTasks() {
 
 function loadTasks(filterStatus) {
   if (filterStatus === "all") {
-  tasks.forEach((task) => {
-    renderTask(task);
-  });
+    tasks.forEach((task) => {
+      renderTask(task);
+    });
   } else if (filterStatus === "active") {
     tasks.forEach((task) => {
       if (task.complete === false) {
@@ -208,12 +229,28 @@ formAddTask.addEventListener("submit", (e) => {
   submitAddTaskForm(getInputValue());
 });
 
+function handleItemsFocus(e) {
+  navButtons.forEach((button) => {
+    if (button === e.target) {
+      filterStatus = button.id;
+      button.classList.add("todo-navbar__item_focus");
+      updateFilterLocalStorage();
+    } else {
+      button.classList.remove("todo-navbar__item_focus");
+    }
+  });
+}
+
 navButtons.forEach((button) => {
-  button.addEventListener('click', () => {
+  button.addEventListener("click", (e) => {
     clearTasks();
     loadTasks(button.id);
-  })
-})
+    handleItemsFocus(e);
+  });
+  button.id === filterStatus
+    ? button.classList.add("todo-navbar__item_focus")
+    : button.classList.remove("todo-navbar__item_focus");
+});
 
 handleCounters();
 loadTasks(filterStatus);
