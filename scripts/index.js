@@ -6,21 +6,24 @@ const todoList = app.querySelector(".todo-list");
 
 /**Элементы навигации */
 const navBar = app.querySelector('.todo-navbar');
+const navButtons = navBar.querySelectorAll('.todo-navbar__item');
 const counter = navBar.querySelector('.todo-counters');
-const buttonActive = counter.querySelector('.todo-navbar__item_type_active');
-const buttonComplete = counter.querySelector('.todo-navbar__item_type_complete');
-const buttonAll = counter.querySelector('.todo-navbar__item_type_all');
 const coounterActive = counter.querySelector('.todo-counters__counter_active');
 const counterComplete = counter.querySelector('.todo-counters__counter_complete');
 const counterAll = counter.querySelector('.todo-counters__counter_all');
 
+/**Переменные для хранения временных значений */
 let tasks;
+let filterStatus;
 let currentTask;
 let prevTaskText;
 
+/**Работа с локальным хранилищем */
 localStorage.tasks
   ? (tasks = JSON.parse(localStorage.getItem("tasks")))
   : (tasks = []);
+
+localStorage.filter ? (filterStatus = JSON.parse(localStorage.getItem("tasks"))) : (filterStatus = "active");
 
 function updateLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -51,6 +54,7 @@ function deleteItemFromTasks(textContent) {
   handleCounters();
 }
 
+/**Обработчики функционала элемента задачи*/
 function handleDeleteTask(e) {
   const currentTask = e.target.closest(".todo-list__item");
   const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
@@ -111,19 +115,13 @@ function handleEditTask(e) {
   currentTask.addEventListener("blur", confirmEditTask);
 }
 
-function getInputValue() {
-  const task = {};
-  task.task = inputAddTask.value;
-  task.complete = false;
-  return task;
-}
-
 function handleCheckTask(task, newTask) {
   if (task.complete) {
     newTask.classList.toggle("todo-list__item-check_checked");
   }   
 }
 
+/**Создание новой задачи */
 function createNewTask(task) {
   const newTask = taskTemplate.cloneNode(true);
   newTask.querySelector(".todo-list__item-text").textContent = task.task;
@@ -137,9 +135,11 @@ function createNewTask(task) {
   return newTask;
 }
 
-function renderTask(task) {
-  const newTask = createNewTask(task);
-  todoList.append(newTask);
+function getInputValue() {
+  const task = {};
+  task.task = inputAddTask.value;
+  task.complete = false;
+  return task;
 }
 
 function submitAddTaskForm(task) {
@@ -165,49 +165,55 @@ function submitAddTaskForm(task) {
   // }
 }
 
-// function getArrayTasks() {
-//   return Array.from(JSON.parse(localStorage.getItem("tasks") || "[]"));
-// }
-
-function getFilterFromStorage() {
-  return localStorage.getItem("complete");
+/**Рендер списка задач*/
+function renderTask(task) {
+  const newTask = createNewTask(task);
+  todoList.append(newTask);
 }
 
-function loadTasks(taskCompleteStatus) {
-  // if (taskCompleteStatus === "all") {
+function clearTasks() {
+  todoList.innerHTML = "";
+}
+
+function loadTasks(filterStatus) {
+  if (filterStatus === "all") {
   tasks.forEach((task) => {
     renderTask(task);
   });
-  // } else if (taskCompleteStatus === "active") {
-  //   tasks.forEach((task) => {
-  //     if (task.complete === false) {
-  //       renderTask(task);
-  //     }
-  //   });
-  // } else if (taskCompleteStatus === "complete") {
-  //   tasks.forEach((task) => {
-  //     if (task.complete === true) {
-  //       renderTask(task);
-  //     }
-  //   });
-  // }
+  } else if (filterStatus === "active") {
+    tasks.forEach((task) => {
+      if (task.complete === false) {
+        renderTask(task);
+      }
+    });
+  } else if (filterStatus === "complete") {
+    tasks.forEach((task) => {
+      if (task.complete === true) {
+        renderTask(task);
+      }
+    });
+  }
 }
 
+//**ОБработчик счетчика */
 function handleCounters() {
-    coounterActive.textContent = tasks.filter((e) => e.complete === false).length;
-    counterComplete.textContent = tasks.filter((e) => e.complete === true).length;
-    counterAll.textContent = tasks.length;
+  coounterActive.textContent = tasks.filter((e) => e.complete === false).length;
+  counterComplete.textContent = tasks.filter((e) => e.complete === true).length;
+  counterAll.textContent = tasks.length;
 }
 
-// function loadInitialTasks() {
-//   const initialTasks =
-// }
-
+//**Слушатели событий */
 formAddTask.addEventListener("submit", (e) => {
   e.preventDefault();
   submitAddTaskForm(getInputValue());
 });
 
+navButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    clearTasks();
+    loadTasks(button.id);
+  })
+})
 
 handleCounters();
-loadTasks();
+loadTasks(filterStatus);
