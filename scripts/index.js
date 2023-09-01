@@ -4,6 +4,16 @@ const inputAddTask = formAddTask.querySelector(".todo-form__input");
 const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
+/**Элементы навигации */
+const navBar = app.querySelector('.todo-navbar');
+const counter = navBar.querySelector('.todo-counters');
+const buttonActive = counter.querySelector('.todo-navbar__item_type_active');
+const buttonComplete = counter.querySelector('.todo-navbar__item_type_complete');
+const buttonAll = counter.querySelector('.todo-navbar__item_type_all');
+const coounterActive = counter.querySelector('.todo-counters__counter_active');
+const counterComplete = counter.querySelector('.todo-counters__counter_complete');
+const counterAll = counter.querySelector('.todo-counters__counter_all');
+
 let tasks;
 let currentTask;
 let prevTaskText;
@@ -19,6 +29,7 @@ function updateLocalStorage() {
 function addItemToTasks(task) {
   tasks = [...tasks, task];
   updateLocalStorage();
+  handleCounters();
 }
 
 function editTaskInStorage(textContent, currentTextContent) {
@@ -37,6 +48,7 @@ function deleteItemFromTasks(textContent) {
     }
   });
   updateLocalStorage();
+  handleCounters();
 }
 
 function handleDeleteTask(e) {
@@ -63,7 +75,7 @@ function handleCompleteTask(e) {
   //     item.removeTaskElement();
   //   }, 300);
   // }
-  // counter.handleCounters(ls.getArrayTasks());
+  handleCounters();
   // navBar.handleCommonButtons();
 }
 
@@ -145,7 +157,7 @@ function submitAddTaskForm(task) {
   addItemToTasks(task);
   renderTask(task);
   formAddTask.reset();
-  // counter.handleCounters(ls.getArrayTasks());
+  handleCounters();
   // navBar.handleCommonButtons();
   //   } else {
   //     alert("Такое задание у вас уже есть!");
@@ -181,6 +193,12 @@ function loadTasks(taskCompleteStatus) {
   // }
 }
 
+function handleCounters() {
+    coounterActive.textContent = tasks.filter((e) => e.complete === false).length;
+    counterComplete.textContent = tasks.filter((e) => e.complete === true).length;
+    counterAll.textContent = tasks.length;
+}
+
 // function loadInitialTasks() {
 //   const initialTasks =
 // }
@@ -190,4 +208,6 @@ formAddTask.addEventListener("submit", (e) => {
   submitAddTaskForm(getInputValue());
 });
 
+
+handleCounters();
 loadTasks();
