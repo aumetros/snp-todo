@@ -315,7 +315,7 @@ buttonUncheckAll.addEventListener("click", handleUncheckAllTasks);
 buttonClearComplete.addEventListener("click", handleClearCompleteTasks);
 buttonClearAll.addEventListener("click", handleClearAllTasks);
 
-/**Уствновка слушателей на элементах фильтра */
+/**Установка слушателей на элементах фильтра */
 navButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     clearTaskList();
