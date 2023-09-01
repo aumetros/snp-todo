@@ -9,15 +9,11 @@ const todoList = app.querySelector(".todo-list");
 /**Элементы навигации */
 const navBar = app.querySelector(".todo-navbar");
 const navButtons = navBar.querySelectorAll(".todo-navbar__item");
-const buttonClearComplete = navBar.querySelector(
-  ".todo-navbar__clear_type_completed"
-);
+const buttonClearComplete = navBar.querySelector(".todo-navbar__clear_type_completed");
 const buttonClearAll = navBar.querySelector(".todo-navbar__clear_type_all");
 const counter = navBar.querySelector(".todo-counters");
-const coounterActive = counter.querySelector(".todo-counters__counter_active");
-const counterComplete = counter.querySelector(
-  ".todo-counters__counter_complete"
-);
+const counterActive = counter.querySelector(".todo-counters__counter_active");
+const counterComplete = counter.querySelector(".todo-counters__counter_complete");
 const counterAll = counter.querySelector(".todo-counters__counter_all");
 
 /**Переменные для хранения временных значений */
@@ -48,7 +44,7 @@ function addItemToTasks(task) {
   updateTasksLocalStorage();
 }
 
-function editTaskInStorage(textContent, currentTextContent) {
+function editItemInTasks(textContent, currentTextContent) {
   tasks.forEach((task) => {
     if (task.task === currentTextContent) {
       task.task = textContent;
@@ -65,6 +61,18 @@ function deleteItemFromTasks(textContent) {
   });
   updateTasksLocalStorage();
   handleCounters();
+}
+
+function clearCompleteTasks() {
+  tasks = tasks.filter((task) => {
+    return task.complete !== true;
+  });
+  updateTasksLocalStorage();
+}
+
+function clearAllTasks() {
+  tasks = [];
+  updateTasksLocalStorage();
 }
 
 /**Обработчики функционала элемента задачи*/
@@ -114,7 +122,7 @@ function editTask() {
     alert("Такое задание у вас уже есть!");
     currentTask.textContent = prevTaskText;
   } else {
-    editTaskInStorage(currentTask.textContent, prevTaskText);
+    editItemInTasks(currentTask.textContent, prevTaskText);
   }
 }
 
@@ -190,7 +198,7 @@ function renderTask(task) {
   todoList.append(newTask);
 }
 
-function clearTasks() {
+function clearTaskList() {
   todoList.innerHTML = "";
 }
 
@@ -216,7 +224,7 @@ function loadTasks(filterStatus) {
 
 //**ОБработчик счетчика */
 function handleCounters() {
-  coounterActive.textContent = tasks.filter((e) => e.complete === false).length;
+  counterActive.textContent = tasks.filter((e) => e.complete === false).length;
   counterComplete.textContent = tasks.filter((e) => e.complete === true).length;
   counterAll.textContent = tasks.length;
 }
@@ -226,6 +234,23 @@ formAddTask.addEventListener("submit", (e) => {
   e.preventDefault();
   submitAddTaskForm(getInputValue());
 });
+
+function handleClearCompleteTasks() {
+  clearCompleteTasks();
+  clearTaskList();
+  loadTasks(filterStatus);
+  handleCounters();
+  // navBar.handleCommonButtons();
+}
+
+function handleClearAllTasks() {
+  clearAllTasks();
+  clearTaskList();
+  handleCounters();
+}
+
+buttonClearComplete.addEventListener('click', handleClearCompleteTasks);
+buttonClearAll.addEventListener('click', handleClearAllTasks);
 
 function handleItemsFocus(e) {
   navButtons.forEach((button) => {
@@ -241,7 +266,7 @@ function handleItemsFocus(e) {
 
 navButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    clearTasks();
+    clearTaskList();
     loadTasks(button.id);
     handleItemsFocus(e);
   });
