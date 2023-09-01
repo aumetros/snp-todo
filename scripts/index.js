@@ -16,6 +16,9 @@ const counterActive = counter.querySelector(".todo-counters__counter_active");
 const counterComplete = counter.querySelector(".todo-counters__counter_complete");
 const counterAll = counter.querySelector(".todo-counters__counter_all");
 
+
+const buttonCheckAll = navBar.querySelector('.todo-navbar__common_type_check');
+const buttonUncheckAll = navBar.querySelector('.todo-navbar__common_type_uncheck');
 /**Переменные для хранения временных значений */
 let tasks;
 let filterStatus;
@@ -60,7 +63,16 @@ function deleteItemFromTasks(textContent) {
     }
   });
   updateTasksLocalStorage();
-  handleCounters();
+}
+
+function checkAllActiveTasks() {
+  tasks.forEach((task) => task.complete = true);
+  updateTasksLocalStorage();
+}
+
+function uncheckAllCompleteTasks() {
+  tasks.forEach((task) => task.complete = false);
+  updateTasksLocalStorage();
 }
 
 function clearCompleteTasks() {
@@ -81,6 +93,7 @@ function handleDeleteTask(e) {
   const currentTaskText = currentTask.querySelector(".todo-list__item-text").textContent;
   deleteItemFromTasks(currentTaskText);
   currentTask.remove();
+  handleCounters();
 }
 
 function toggleCompleteInTasks(e) {
@@ -248,6 +261,24 @@ function handleClearAllTasks() {
   clearTaskList();
   handleCounters();
 }
+
+function handleCheckAllTasks() {
+  checkAllActiveTasks();
+  clearTaskList();
+  loadTasks(filterStatus);
+  handleCounters();
+  // navBar.handleCommonButtons();
+}
+
+function handleUncheckAllTasks() {
+  uncheckAllCompleteTasks();
+  clearTaskList();
+  loadTasks(filterStatus);
+  handleCounters();
+}
+
+buttonCheckAll.addEventListener('click', handleCheckAllTasks);
+buttonUncheckAll.addEventListener('click', handleUncheckAllTasks);
 
 buttonClearComplete.addEventListener('click', handleClearCompleteTasks);
 buttonClearAll.addEventListener('click', handleClearAllTasks);
