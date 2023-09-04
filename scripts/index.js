@@ -267,35 +267,31 @@ function handleCounters() {
 }
 
 /**Обработчики событий со всем списком задач */
-function handleClearCompleteTasks() {
-  clearCompleteTasks();
+function handleUpdateTodoState() {
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
   handleCommonButtons();
+}
+
+function handleClearCompleteTasks() {
+  clearCompleteTasks();
+  handleUpdateTodoState();
 }
 
 function handleClearAllTasks() {
   clearAllTasks();
-  clearTaskList();
-  handleCounters();
-  handleCommonButtons();
+  handleUpdateTodoState();
 }
 
 function handleCheckAllTasks() {
   handleUpdateAllTasks(true);
-  clearTaskList();
-  loadTasks(filterStatus);
-  handleCounters();
-  handleCommonButtons();
+  handleUpdateTodoState();
 }
 
 function handleUncheckAllTasks() {
   handleUpdateAllTasks(false);
-  clearTaskList();
-  loadTasks(filterStatus);
-  handleCounters();
-  handleCommonButtons();
+  handleUpdateTodoState();
 }
 
 /**Обработчик фокуса на элементах фильтра */
