@@ -169,7 +169,9 @@ function handleEnterPress(e) {
 }
 
 function handleEditTask(e) {
-  currentTask = e.target.previousElementSibling;
+  e.target.classList.contains("todo-list__item-text")
+    ? (currentTask = e.target)
+    : (currentTask = e.target.previousElementSibling);
   prevTaskText = currentTask.textContent;
   currentTask.contentEditable = true;
   currentTask.focus();
@@ -180,13 +182,15 @@ function handleEditTask(e) {
 /**Создание новой задачи */
 function createNewTask(task) {
   const newTask = taskTemplate.cloneNode(true);
-  newTask.querySelector(".todo-list__item-text").textContent = task.task;
+  const taskText = newTask.querySelector(".todo-list__item-text");
+  taskText.textContent = task.task;
   const taskCheck = newTask.querySelector(".todo-list__item-check");
   const taskEdit = newTask.querySelector(".todo-list__item-btn_type_edit");
   const taskDelete = newTask.querySelector(".todo-list__item-btn_type_delete");
   task.complete
     ? taskCheck.classList.toggle("todo-list__item-check_checked")
     : null;
+  taskText.addEventListener("dblclick", handleEditTask);
   taskCheck.addEventListener("click", handleCompleteTask);
   taskEdit.addEventListener("click", handleEditTask);
   taskDelete.addEventListener("click", handleDeleteTask);
@@ -227,9 +231,7 @@ function handleOuterClick(e) {
   if (!app.contains(e.target) && inputAddTask.value !== "") {
     submitAddTaskForm(getInputValue());
   }
-};
-
-
+}
 
 /**Рендер списка задач*/
 function renderTask(task) {
