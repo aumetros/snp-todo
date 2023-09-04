@@ -1,9 +1,7 @@
 const app = document.querySelector(".todo");
 const formAddTask = app.querySelector(".todo-form");
 const inputAddTask = formAddTask.querySelector(".todo-form__input");
-const taskTemplate = document
-  .querySelector("#todo-list__item")
-  .content.querySelector(".todo-list__item");
+const taskTemplate = document.querySelector("#todo-list__item").content.querySelector(".todo-list__item");
 const todoList = app.querySelector(".todo-list");
 
 /**Элементы навигации */
@@ -12,20 +10,14 @@ const navButtons = navBar.querySelectorAll(".todo-navbar__item");
 
 const counter = navBar.querySelector(".todo-counters");
 const counterActive = counter.querySelector(".todo-counters__counter_active");
-const counterComplete = counter.querySelector(
-  ".todo-counters__counter_complete"
-);
+const counterComplete = counter.querySelector(".todo-counters__counter_complete");
 const counterAll = counter.querySelector(".todo-counters__counter_all");
 
-const buttonClearComplete = navBar.querySelector(
-  ".todo-navbar__clear_type_completed"
-);
+const buttonClearComplete = navBar.querySelector(".todo-navbar__clear_type_completed");
 const buttonClearAll = navBar.querySelector(".todo-navbar__clear_type_all");
 
 const buttonCheckAll = navBar.querySelector(".todo-navbar__common_type_check");
-const buttonUncheckAll = navBar.querySelector(
-  ".todo-navbar__common_type_uncheck"
-);
+const buttonUncheckAll = navBar.querySelector(".todo-navbar__common_type_uncheck");
 
 /**Переменные для хранения временных значений */
 let currentTask;
