@@ -223,6 +223,14 @@ function submitAddTaskForm(task) {
   }
 }
 
+function handleOuterClick(e) {
+  if (!app.contains(e.target) && inputAddTask.value !== "") {
+    submitAddTaskForm(getInputValue());
+  }
+};
+
+
+
 /**Рендер списка задач*/
 function renderTask(task) {
   const newTask = createNewTask(task);
@@ -321,6 +329,8 @@ formAddTask.addEventListener("submit", (e) => {
   e.preventDefault();
   submitAddTaskForm(getInputValue());
 });
+
+document.addEventListener("click", handleOuterClick);
 
 buttonCheckAll.addEventListener("click", handleCheckAllTasks);
 buttonUncheckAll.addEventListener("click", handleUncheckAllTasks);
