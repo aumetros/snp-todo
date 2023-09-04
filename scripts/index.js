@@ -66,13 +66,8 @@ function deleteItemFromTasks(textContent) {
   updateTasksLocalStorage();
 }
 
-function checkAllActiveTasks() {
-  tasks.forEach((task) => (task.complete = true));
-  updateTasksLocalStorage();
-}
-
-function uncheckAllCompleteTasks() {
-  tasks.forEach((task) => (task.complete = false));
+function handleUpdateAllTasks(boolean) {
+  tasks.forEach((task) => (task.complete = boolean));
   updateTasksLocalStorage();
 }
 
@@ -288,7 +283,7 @@ function handleClearAllTasks() {
 }
 
 function handleCheckAllTasks() {
-  checkAllActiveTasks();
+  handleUpdateAllTasks(true);
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
@@ -296,7 +291,7 @@ function handleCheckAllTasks() {
 }
 
 function handleUncheckAllTasks() {
-  uncheckAllCompleteTasks();
+  handleUpdateAllTasks(false);
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
