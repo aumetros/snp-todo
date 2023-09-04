@@ -33,7 +33,9 @@ let prevTaskText;
 
 /**Работа с локальным хранилищем */
 let tasks = localStorage.tasks ? JSON.parse(localStorage.getItem("tasks")) : [];
-let filterStatus = localStorage.filter ? JSON.parse(localStorage.getItem("filter")) : "active";
+let filterStatus = localStorage.filter
+  ? JSON.parse(localStorage.getItem("filter"))
+  : "active";
 
 function updateTasksLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -72,9 +74,7 @@ function handleUpdateAllTasks(boolean) {
 }
 
 function clearCompleteTasks() {
-  tasks = tasks.filter((task) => {
-    return task.complete !== true;
-  });
+  tasks = tasks.filter((task) => task.complete !== true);
   updateTasksLocalStorage();
 }
 
@@ -94,13 +94,11 @@ function toggleCompleteInTasks(e) {
 
 /**Проверка на полностью выполненные или активные задачи */
 function isAllTasksActive() {
-  const activeTasks = tasks.some((todo) => todo.complete === false);
-  return activeTasks;
+  return tasks.some((todo) => todo.complete === false);
 }
 
 function isAllTasksComplete() {
-  const completeTasks = tasks.some((todo) => todo.complete === true);
-  return completeTasks;
+  return tasks.some((todo) => todo.complete === true);
 }
 
 /**Обработчики функционала элемента задачи*/
@@ -128,10 +126,7 @@ function handleCompleteTask(e) {
 }
 
 function isDublicateTask(taskText) {
-  const dublicate = tasks.some((todo) => {
-    return taskText === todo.task;
-  });
-  return dublicate;
+  return tasks.some((todo) => taskText === todo.task);
 }
 
 function editTask() {
