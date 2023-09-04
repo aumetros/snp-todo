@@ -241,13 +241,13 @@ function loadTasks(filterStatus) {
     });
   } else if (filterStatus === "active") {
     tasks.forEach((task) => {
-      if (task.complete === false) {
+      if (!task.complete) {
         renderTask(task);
       }
     });
   } else if (filterStatus === "complete") {
     tasks.forEach((task) => {
-      if (task.complete === true) {
+      if (task.complete) {
         renderTask(task);
       }
     });
@@ -256,8 +256,8 @@ function loadTasks(filterStatus) {
 
 //**ОБработчик счетчика */
 function handleCounters() {
-  counterActive.textContent = tasks.filter((e) => e.complete === false).length;
-  counterComplete.textContent = tasks.filter((e) => e.complete === true).length;
+  counterActive.textContent = tasks.filter((e) => !e.complete).length;
+  counterComplete.textContent = tasks.filter((e) => e.complete).length;
   counterAll.textContent = tasks.length;
 }
 
