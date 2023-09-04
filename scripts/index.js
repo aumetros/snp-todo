@@ -20,19 +20,14 @@ const buttonCheckAll = navBar.querySelector(".todo-navbar__common_type_check");
 const buttonUncheckAll = navBar.querySelector(".todo-navbar__common_type_uncheck");
 
 /**Переменные для хранения временных значений */
-let tasks;
-let filterStatus;
 let currentTask;
 let prevTaskText;
 
 /**Работа с локальным хранилищем */
-localStorage.tasks
-  ? (tasks = JSON.parse(localStorage.getItem("tasks")))
-  : (tasks = []);
-
-localStorage.filter
-  ? (filterStatus = JSON.parse(localStorage.getItem("filter")))
-  : (filterStatus = "active");
+let tasks = localStorage.tasks ? JSON.parse(localStorage.getItem("tasks")) : [];
+let filterStatus = localStorage.filter
+  ? JSON.parse(localStorage.getItem("filter"))
+  : "active";
 
 function updateTasksLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -65,20 +60,13 @@ function deleteItemFromTasks(textContent) {
   updateTasksLocalStorage();
 }
 
-function checkAllActiveTasks() {
-  tasks.forEach((task) => (task.complete = true));
-  updateTasksLocalStorage();
-}
-
-function uncheckAllCompleteTasks() {
-  tasks.forEach((task) => (task.complete = false));
+function handleUpdateAllTasks(boolean) {
+  tasks.forEach((task) => (task.complete = boolean));
   updateTasksLocalStorage();
 }
 
 function clearCompleteTasks() {
-  tasks = tasks.filter((task) => {
-    return task.complete !== true;
-  });
+  tasks = tasks.filter((task) => task.complete !== true);
   updateTasksLocalStorage();
 }
 
@@ -98,13 +86,11 @@ function toggleCompleteInTasks(e) {
 
 /**Проверка на полностью выполненные или активные задачи */
 function isAllTasksActive() {
-  const activeTasks = tasks.some((todo) => todo.complete === false);
-  return activeTasks;
+  return tasks.some((todo) => todo.complete === false);
 }
 
 function isAllTasksComplete() {
-  const completeTasks = tasks.some((todo) => todo.complete === true);
-  return completeTasks;
+  return tasks.some((todo) => todo.complete === true);
 }
 
 /**Обработчики функционала элемента задачи*/
@@ -132,10 +118,7 @@ function handleCompleteTask(e) {
 }
 
 function isDublicateTask(taskText) {
-  const dublicate = tasks.some((todo) => {
-    return taskText === todo.task;
-  });
-  return dublicate;
+  return tasks.some((todo) => taskText === todo.task);
 }
 
 function editTask() {
@@ -169,7 +152,9 @@ function handleEnterPress(e) {
 }
 
 function handleEditTask(e) {
-  currentTask = e.target.previousElementSibling;
+  e.target.classList.contains("todo-list__item-text")
+    ? (currentTask = e.target)
+    : (currentTask = e.target.previousElementSibling);
   prevTaskText = currentTask.textContent;
   currentTask.contentEditable = true;
   currentTask.focus();
@@ -180,13 +165,15 @@ function handleEditTask(e) {
 /**Создание новой задачи */
 function createNewTask(task) {
   const newTask = taskTemplate.cloneNode(true);
-  newTask.querySelector(".todo-list__item-text").textContent = task.task;
+  const taskText = newTask.querySelector(".todo-list__item-text");
+  taskText.textContent = task.task;
   const taskCheck = newTask.querySelector(".todo-list__item-check");
   const taskEdit = newTask.querySelector(".todo-list__item-btn_type_edit");
   const taskDelete = newTask.querySelector(".todo-list__item-btn_type_delete");
   task.complete
     ? taskCheck.classList.toggle("todo-list__item-check_checked")
     : null;
+  taskText.addEventListener("dblclick", handleEditTask);
   taskCheck.addEventListener("click", handleCompleteTask);
   taskEdit.addEventListener("click", handleEditTask);
   taskDelete.addEventListener("click", handleDeleteTask);
@@ -223,6 +210,12 @@ function submitAddTaskForm(task) {
   }
 }
 
+function handleOuterClick(e) {
+  if (!app.contains(e.target) && inputAddTask.value !== "") {
+    submitAddTaskForm(getInputValue());
+  }
+}
+
 /**Рендер списка задач*/
 function renderTask(task) {
   const newTask = createNewTask(task);
@@ -240,13 +233,13 @@ function loadTasks(filterStatus) {
     });
   } else if (filterStatus === "active") {
     tasks.forEach((task) => {
-      if (task.complete === false) {
+      if (!task.complete) {
         renderTask(task);
       }
     });
   } else if (filterStatus === "complete") {
     tasks.forEach((task) => {
-      if (task.complete === true) {
+      if (task.complete) {
         renderTask(task);
       }
     });
@@ -255,41 +248,37 @@ function loadTasks(filterStatus) {
 
 //**ОБработчик счетчика */
 function handleCounters() {
-  counterActive.textContent = tasks.filter((e) => e.complete === false).length;
-  counterComplete.textContent = tasks.filter((e) => e.complete === true).length;
+  counterActive.textContent = tasks.filter((e) => !e.complete).length;
+  counterComplete.textContent = tasks.filter((e) => e.complete).length;
   counterAll.textContent = tasks.length;
 }
 
 /**Обработчики событий со всем списком задач */
-function handleClearCompleteTasks() {
-  clearCompleteTasks();
+function handleUpdateTodoState() {
   clearTaskList();
   loadTasks(filterStatus);
   handleCounters();
   handleCommonButtons();
+}
+
+function handleClearCompleteTasks() {
+  clearCompleteTasks();
+  handleUpdateTodoState();
 }
 
 function handleClearAllTasks() {
   clearAllTasks();
-  clearTaskList();
-  handleCounters();
-  handleCommonButtons();
+  handleUpdateTodoState();
 }
 
 function handleCheckAllTasks() {
-  checkAllActiveTasks();
-  clearTaskList();
-  loadTasks(filterStatus);
-  handleCounters();
-  handleCommonButtons();
+  handleUpdateAllTasks(true);
+  handleUpdateTodoState();
 }
 
 function handleUncheckAllTasks() {
-  uncheckAllCompleteTasks();
-  clearTaskList();
-  loadTasks(filterStatus);
-  handleCounters();
-  handleCommonButtons();
+  handleUpdateAllTasks(false);
+  handleUpdateTodoState();
 }
 
 /**Обработчик фокуса на элементах фильтра */
@@ -321,6 +310,8 @@ formAddTask.addEventListener("submit", (e) => {
   e.preventDefault();
   submitAddTaskForm(getInputValue());
 });
+
+document.addEventListener("click", handleOuterClick);
 
 buttonCheckAll.addEventListener("click", handleCheckAllTasks);
 buttonUncheckAll.addEventListener("click", handleUncheckAllTasks);

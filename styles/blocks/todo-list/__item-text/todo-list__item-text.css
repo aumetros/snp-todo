@@ -3,4 +3,5 @@
   margin: 0 10px;
   text-overflow: ellipsis;
   overflow: hidden;
+  cursor: pointer;
 }
